@@ -11,7 +11,6 @@ import {
   ArrowDown,
   Sparkles,
   Download,
-  RotateCcw,
 } from 'lucide-react';
 import { useMousePosition } from '@/hooks/useMousePosition';
 
@@ -314,7 +313,7 @@ export default function Hero() {
       <div className="absolute top-28 right-[5%] w-[480px] h-[480px] rounded-full bg-indigo-50/50 blur-3xl pointer-events-none" />
 
       {/* ════════════════════════════════════════════════════════════════════════════════
-          1. AWALAN HERO (Sesuai Referensi Gambar dengan Foto Crop Setengah Badan)
+          1. AWALAN HERO (Sesuai Referensi Gambar dengan Foto Cutout Tanpa Background)
          ════════════════════════════════════════════════════════════════════════════════ */}
       <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[580px]">
@@ -331,7 +330,7 @@ export default function Hero() {
               <span>ikuzooo</span>
             </div>
 
-            {/* Main Headline: "Halo, aku Moch Yazid Al Bustomi." style */}
+            {/* Main Headline */}
             <h1 className="text-5xl sm:text-6xl md:text-[68px] font-black tracking-[-0.035em] text-[#0F172A] leading-[1.05] mb-5">
               Halo, aku <br />
               <span className="text-[#0F172A]">Kartika Nur</span> <br />
@@ -340,7 +339,7 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Subtitle / Role with Amber Highlight Cursor ("Business Digital|") */}
+            {/* Subtitle / Role with Amber Highlight Cursor */}
             <div className="flex items-center gap-1.5 mb-5 font-bold text-lg sm:text-xl text-[#D97706]">
               <span>{displayedRole || 'Data Science'}</span>
               <span className="inline-block w-2.5 h-5 sm:h-6 bg-[#D97706] rounded-[1px] animate-pulse" />
@@ -351,7 +350,7 @@ export default function Hero() {
               Data Science, UI/UX, Web Development, Data Analyst, dan Machine Learning. Universitas Negeri Surabaya, Jawa Timur.
             </p>
 
-            {/* Call To Action Buttons (3 Pill Buttons: Blue, White, White) */}
+            {/* Call To Action Buttons */}
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={scrollToProjects}
@@ -378,8 +377,8 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN: 3D Torus, Cropped Half-Body Photo & Floating Badges ─── */}
-          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[520px]">
+          {/* ─── RIGHT COLUMN: 3D Torus, Transparent Cutout Photo & Floating Badges ─── */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center min-h-[480px] sm:min-h-[540px]">
 
             {/* 1. 3D Torus Wireframe SVG Background */}
             <TorusWireframe mouseX={mouse.x} mouseY={mouse.y} />
@@ -404,30 +403,36 @@ export default function Hero() {
               className="absolute right-2 bottom-8 w-11 h-11 rounded-full bg-amber-300/30 blur-md pointer-events-none"
             />
 
-            {/* 4. Central Half-Body Cropped Photo Container */}
+            {/* 4. Central Cutout Photo (Transparent Background - Matches Reference Exactly) */}
             <div
-              className="relative z-10 w-[270px] sm:w-[320px] md:w-[350px] aspect-[4/5] rounded-[32px] overflow-hidden shadow-[0_20px_50px_rgba(15,23,42,0.18)] border-[3.5px] border-white/90 bg-white/40 backdrop-blur-sm transition-transform duration-300 ease-out"
+              className="relative z-10 flex items-center justify-center transition-transform duration-300 ease-out"
               style={{
                 transform: `translate(${mouse.x * 6}px, ${mouse.y * 6}px)`,
               }}
             >
-              <Image
-                src="/images/profile-crop-half.jpg"
-                alt="Kartika Nur Savira"
-                fill
-                priority
-                className="object-cover object-top select-none pointer-events-none"
-                sizes="(max-width: 768px) 300px, 380px"
-              />
-
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none" />
+              <div
+                className="relative w-[300px] sm:w-[350px] md:w-[390px] h-[400px] sm:h-[450px] md:h-[490px]"
+                style={{
+                  maskImage: 'linear-gradient(to bottom, black 86%, transparent 100%)',
+                  WebkitMaskImage: 'linear-gradient(to bottom, black 86%, transparent 100%)',
+                }}
+              >
+                <Image
+                  src="/images/profile-nobg.png"
+                  alt="Kartika Nur Savira"
+                  fill
+                  priority
+                  className="object-contain object-bottom drop-shadow-[0_24px_38px_rgba(15,23,42,0.2)] select-none pointer-events-none"
+                  sizes="(max-width: 768px) 320px, 400px"
+                />
+              </div>
             </div>
 
             {/* ─── 5. Floating Badge Pills Around Photo ─── */}
 
-            {/* Badge A: "🎨 UI/UX" */}
+            {/* Badge A: "🎨 UI/UX" (Top Center / Left of Head) */}
             <div
-              className="absolute top-6 left-12 sm:left-16 z-20 pointer-events-auto"
+              className="absolute top-4 left-10 sm:left-14 z-20 pointer-events-auto"
               style={{
                 transform: `translate(${mouse.x * 14}px, ${mouse.y * 14}px)`,
                 transition: 'transform 0.15s ease-out',
@@ -441,9 +446,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge B: "💻 Web Dev" */}
+            {/* Badge B: "💻 Web Dev" (Top Right of Head) */}
             <div
-              className="absolute top-20 right-0 sm:-right-4 z-20 pointer-events-auto"
+              className="absolute top-16 right-0 sm:-right-4 z-20 pointer-events-auto"
               style={{
                 transform: `translate(${mouse.x * -10}px, ${mouse.y * -10}px)`,
                 transition: 'transform 0.15s ease-out',
@@ -457,9 +462,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge C: "📊 Data Analyst" */}
+            {/* Badge C: "📊 Data Analyst" (Bottom Left of Photo) */}
             <div
-              className="absolute bottom-16 -left-3 sm:left-4 z-20 pointer-events-auto"
+              className="absolute bottom-16 -left-4 sm:left-2 z-20 pointer-events-auto"
               style={{
                 transform: `translate(${mouse.x * 10}px, ${mouse.y * 10}px)`,
                 transition: 'transform 0.15s ease-out',
@@ -473,9 +478,9 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge D: "⚙️ Backend" */}
+            {/* Badge D: "⚙️ Backend" (Bottom Right of Photo) */}
             <div
-              className="absolute bottom-6 right-2 sm:right-6 z-20 pointer-events-auto"
+              className="absolute bottom-8 right-2 sm:right-6 z-20 pointer-events-auto"
               style={{
                 transform: `translate(${mouse.x * -12}px, ${mouse.y * -12}px)`,
                 transition: 'transform 0.15s ease-out',
@@ -492,7 +497,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Scroll Indicator Bar (Restored from Original Design) */}
+        {/* Scroll Indicator Bar */}
         <div className="flex items-center justify-between border-t border-[#0B1F3A]/15 pt-5 text-xs font-bold uppercase tracking-[0.18em] text-[#24577A] mt-8">
           <span className="flex items-center gap-2">
             <ArrowDown size={14} className="animate-bounce" /> Scroll to explore
@@ -517,7 +522,7 @@ export default function Hero() {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════════════════
-          3. BAGIAN BAWAH HERO (Intro Section & Download CV / View Work - Restored)
+          3. BAGIAN BAWAH HERO (Intro Section & Download CV / View Work)
          ════════════════════════════════════════════════════════════════════════════════ */}
       <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-20 md:px-10 lg:grid-cols-2 lg:items-center lg:gap-20 lg:py-28">
         <div className="hero-intro-art">
