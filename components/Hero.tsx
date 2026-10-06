@@ -332,7 +332,7 @@ export default function Hero() {
 
             {/* Main Headline */}
             <h1 className="text-5xl sm:text-6xl md:text-[68px] font-black tracking-[-0.035em] text-[#0F172A] leading-[1.05] mb-5">
-              Halo, aku <br />
+              Halo, I'm <br />
               <span className="text-[#0F172A]">Kartika Nur</span> <br />
               <span className="bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#4F46E5] bg-clip-text text-transparent">
                 Savira.
