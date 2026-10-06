@@ -327,7 +327,7 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10B981]" />
               </span>
-              <span>ikuzooo</span>
+              <span>Savira</span>
             </div>
 
             {/* Main Headline */}
@@ -356,24 +356,17 @@ export default function Hero() {
                 onClick={scrollToProjects}
                 className="px-6 py-3 rounded-full bg-[#3B66F5] hover:bg-[#2B54E0] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(59,102,245,0.32)] hover:shadow-[0_10px_24px_rgba(59,102,245,0.42)] active:scale-[0.98] transition-all flex items-center gap-2"
               >
-                Lihat proyek
+                View Work <ArrowUpRight size={14} />
               </button>
 
               <button
                 onClick={scrollToContact}
                 className="px-6 py-3 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all"
               >
-                Hubungi aku
+                Contact Me
               </button>
 
-              <a
-                href="https://linkedin.com/in/kartika-nur-savira"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all inline-flex items-center gap-1.5"
-              >
-                LinkedIn
-              </a>
+            
             </div>
           </div>
 
@@ -497,27 +490,29 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Scroll Indicator Bar */}
-        <div className="flex items-center justify-between border-t border-[#0B1F3A]/15 pt-5 text-xs font-bold uppercase tracking-[0.18em] text-[#24577A] mt-8">
-          <span className="flex items-center gap-2">
-            <ArrowDown size={14} className="animate-bounce" /> Scroll to explore
-          </span>
-          <span className="hidden md:block">Data · Models · Stories</span>
-          <span>01 / 08</span>
-        </div>
       </div>
 
       {/* ════════════════════════════════════════════════════════════════════════════════
           2. MARQUEE RUNNING TICKER
          ════════════════════════════════════════════════════════════════════════════════ */}
-      <div className="w-full border-y border-slate-200/80 bg-[#E8F5FD]/85 backdrop-blur-sm py-3.5 overflow-hidden">
-        <div className="flex w-max items-center gap-8 animate-marquee whitespace-nowrap text-xs font-extrabold text-[#1E3A8A] tracking-wider uppercase select-none">
-          {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
-            <span key={idx} className="flex items-center gap-8">
-              <span>{item}</span>
-              <span className="w-2 h-2 rounded-full bg-[#D97706] inline-block shrink-0" />
-            </span>
-          ))}
+      <div className="w-full border-y border-slate-200/80 bg-[#E8F5FD]/85 backdrop-blur-sm py-3.5 overflow-hidden select-none">
+        <div className="marquee-track flex w-max">
+          <div className="flex items-center gap-8 shrink-0 pr-8 text-xs font-black text-[#1E3A8A] tracking-wider uppercase">
+            {marqueeItems.map((item, idx) => (
+              <span key={`m1-${idx}`} className="flex items-center gap-8">
+                <span>{item}</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D97706] inline-block shrink-0 shadow-sm shadow-[#D97706]/40" />
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center gap-8 shrink-0 pr-8 text-xs font-black text-[#1E3A8A] tracking-wider uppercase" aria-hidden="true">
+            {marqueeItems.map((item, idx) => (
+              <span key={`m2-${idx}`} className="flex items-center gap-8">
+                <span>{item}</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D97706] inline-block shrink-0 shadow-sm shadow-[#D97706]/40" />
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
