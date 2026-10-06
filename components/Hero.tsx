@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import {
   Palette,
@@ -8,10 +8,10 @@ import {
   BarChart3,
   Database,
   ArrowUpRight,
+  ArrowDown,
   Sparkles,
-  Bot,
-  Layers,
-  Terminal,
+  Download,
+  RotateCcw,
 } from 'lucide-react';
 import { useMousePosition } from '@/hooks/useMousePosition';
 
@@ -21,6 +21,13 @@ const roles = [
   'Web Development',
   'Data Analyst',
   'Machine Learning',
+];
+
+const introTypewriterTexts = [
+  'data visualization',
+  'machine learning',
+  'thoughtful problem solving',
+  'data engineering',
 ];
 
 const marqueeItems = [
@@ -37,12 +44,11 @@ const marqueeItems = [
 // ─── 3D Parametric Torus Wireframe SVG Component ───
 function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
   const rings = useMemo(() => {
-    const majorR = 145; // R
-    const minorR = 68;  // r
+    const majorR = 145;
+    const minorR = 68;
     const numRings = 16;
     const numSlices = 24;
 
-    // Base angles with subtle mouse tilt
     const yaw = 0.55 + mouseX * 0.08;
     const pitch = 0.42 + mouseY * 0.08;
     const roll = -0.25;
@@ -52,14 +58,11 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
     const cr = Math.cos(roll), sr = Math.sin(roll);
 
     const project = (x0: number, y0: number, z0: number) => {
-      // Roll
       const x1 = x0 * cr - y0 * sr;
       const y1 = x0 * sr + y0 * cr;
       const z1 = z0;
-      // Yaw
       const x2 = x1 * cy + z1 * sy;
       const z2 = -x1 * sy + z1 * cy;
-      // Pitch
       const y3 = y1 * cp - z2 * sp;
       const z3 = y1 * sp + z2 * cp;
 
@@ -71,7 +74,6 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
       };
     };
 
-    // Circular cross-sections (rings)
     const ringPaths: { d: string; zAvg: number }[] = [];
     for (let i = 0; i < numRings; i++) {
       const u = (i / numRings) * Math.PI * 2;
@@ -90,7 +92,6 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
       ringPaths.push({ d: pathStr, zAvg: zTotal / (numSlices + 1) });
     }
 
-    // Longitudinal circles
     const longPaths: { d: string; zAvg: number }[] = [];
     for (let j = 0; j < 8; j++) {
       const v = (j / 8) * Math.PI * 2;
@@ -126,7 +127,6 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
         </linearGradient>
       </defs>
 
-      {/* Render back rings */}
       {rings.ringPaths
         .filter((r) => r.zAvg < 0)
         .map((r, idx) => (
@@ -140,7 +140,6 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
           />
         ))}
 
-      {/* Render longitudinal lines */}
       {rings.longPaths.map((l, idx) => (
         <path
           key={`long-${idx}`}
@@ -152,7 +151,6 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
         />
       ))}
 
-      {/* Render front rings */}
       {rings.ringPaths
         .filter((r) => r.zAvg >= 0)
         .map((r, idx) => (
@@ -174,7 +172,6 @@ function IsometricCube() {
   return (
     <div className="absolute -left-4 sm:-left-8 top-[36%] z-[15] pointer-events-none animate-float-medium">
       <svg width="70" height="70" viewBox="0 0 100 100" className="drop-shadow-[0_8px_16px_rgba(59,130,246,0.25)]">
-        {/* Top face */}
         <polygon
           points="50,15 85,35 50,55 15,35"
           fill="#93C5FD"
@@ -183,7 +180,6 @@ function IsometricCube() {
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        {/* Left face */}
         <polygon
           points="15,35 50,55 50,90 15,70"
           fill="#3B82F6"
@@ -192,7 +188,6 @@ function IsometricCube() {
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        {/* Right face */}
         <polygon
           points="50,55 85,35 85,70 50,90"
           fill="#60A5FA"
@@ -201,41 +196,108 @@ function IsometricCube() {
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        {/* Inner wireframe accents */}
         <line x1="50" y1="55" x2="50" y2="15" stroke="#60A5FA" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
       </svg>
     </div>
   );
 }
 
+// ─── Magnetic Buttons ───
+function MagneticButton({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const onMove = useCallback((e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+  }, []);
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (el) el.style.transform = 'translate(0, 0)';
+  }, []);
+  return (
+    <button ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave} style={{ transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }} {...props}>
+      {children}
+    </button>
+  );
+}
+
+function MagneticLink({ children, className, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const onMove = useCallback((e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+  }, []);
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (el) el.style.transform = 'translate(0, 0)';
+  }, []);
+  return (
+    <a ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave} style={{ transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }} {...props}>
+      {children}
+    </a>
+  );
+}
+
 export default function Hero() {
   const mouse = useMousePosition();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Top section role typewriter
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayedRole, setDisplayedRole] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeletingRole, setIsDeletingRole] = useState(false);
 
-  // Typewriter effect matching the amber cursor tag in the reference screenshot
+  // Bottom section intro typewriter
+  const [introIndex, setIntroIndex] = useState(0);
+  const [displayedIntro, setDisplayedIntro] = useState('');
+  const [isDeletingIntro, setIsDeletingIntro] = useState(false);
+
+  // Typewriter for top role tag
   useEffect(() => {
     const current = roles[roleIndex];
     let timer: NodeJS.Timeout;
 
-    if (!isDeleting && displayedRole.length < current.length) {
+    if (!isDeletingRole && displayedRole.length < current.length) {
       timer = setTimeout(() => {
         setDisplayedRole(current.slice(0, displayedRole.length + 1));
       }, 75);
-    } else if (!isDeleting && displayedRole.length === current.length) {
-      timer = setTimeout(() => setIsDeleting(true), 2200);
-    } else if (isDeleting && displayedRole.length > 0) {
+    } else if (!isDeletingRole && displayedRole.length === current.length) {
+      timer = setTimeout(() => setIsDeletingRole(true), 2200);
+    } else if (isDeletingRole && displayedRole.length > 0) {
       timer = setTimeout(() => {
         setDisplayedRole(displayedRole.slice(0, -1));
       }, 40);
-    } else if (isDeleting && displayedRole.length === 0) {
-      setIsDeleting(false);
+    } else if (isDeletingRole && displayedRole.length === 0) {
+      setIsDeletingRole(false);
       setRoleIndex((prev) => (prev + 1) % roles.length);
     }
 
     return () => clearTimeout(timer);
-  }, [displayedRole, isDeleting, roleIndex]);
+  }, [displayedRole, isDeletingRole, roleIndex]);
+
+  // Typewriter for bottom intro paragraph
+  useEffect(() => {
+    const currentWord = introTypewriterTexts[introIndex];
+    let timeout: NodeJS.Timeout;
+    if (!isDeletingIntro && displayedIntro.length < currentWord.length) {
+      timeout = setTimeout(() => setDisplayedIntro(currentWord.slice(0, displayedIntro.length + 1)), 60);
+    } else if (!isDeletingIntro && displayedIntro.length === currentWord.length) {
+      timeout = setTimeout(() => setIsDeletingIntro(true), 2000);
+    } else if (isDeletingIntro && displayedIntro.length > 0) {
+      timeout = setTimeout(() => setDisplayedIntro(displayedIntro.slice(0, -1)), 35);
+    } else if (isDeletingIntro && displayedIntro.length === 0) {
+      setIsDeletingIntro(false);
+      setIntroIndex((prev) => (prev + 1) % introTypewriterTexts.length);
+    }
+    return () => clearTimeout(timeout);
+  }, [displayedIntro, isDeletingIntro, introIndex]);
 
   const scrollToProjects = () => {
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -246,19 +308,21 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative bg-[#F9FBFE] pt-28 pb-12 overflow-hidden text-[#0F172A]">
+    <section id="hero" ref={heroRef} className="relative bg-[#F8FAFD] pt-24 pb-8 overflow-hidden text-[#0F172A]">
       {/* Soft ambient background glows */}
       <div className="absolute top-16 left-[5%] w-96 h-96 rounded-full bg-blue-100/40 blur-3xl pointer-events-none" />
       <div className="absolute top-28 right-[5%] w-[480px] h-[480px] rounded-full bg-indigo-50/50 blur-3xl pointer-events-none" />
 
-      {/* Main Container */}
-      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-8 pb-16">
+      {/* ════════════════════════════════════════════════════════════════════════════════
+          1. AWALAN HERO (Sesuai Referensi Gambar dengan Foto Crop Setengah Badan)
+         ════════════════════════════════════════════════════════════════════════════════ */}
+      <div className="relative mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-8 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[580px]">
 
           {/* ─── LEFT COLUMN: Typography & Actions ─── */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col items-start z-10">
 
-            {/* Status Pill Badge: "🟢 ikuzooo" (Matches Screenshot Exactly) */}
+            {/* Status Pill Badge: "🟢 ikuzooo" */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)] text-xs font-semibold text-slate-700 mb-6 hover:shadow-md transition-shadow">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75" />
@@ -276,20 +340,19 @@ export default function Hero() {
               </span>
             </h1>
 
-            {/* Subtitle / Role with Amber Highlight Cursor (Matches Screenshot "Business Digital|") */}
+            {/* Subtitle / Role with Amber Highlight Cursor ("Business Digital|") */}
             <div className="flex items-center gap-1.5 mb-5 font-bold text-lg sm:text-xl text-[#D97706]">
               <span>{displayedRole || 'Data Science'}</span>
               <span className="inline-block w-2.5 h-5 sm:h-6 bg-[#D97706] rounded-[1px] animate-pulse" />
             </div>
 
-            {/* Description Paragraph (Matches Screenshot format & Kartika's credentials) */}
+            {/* Description Paragraph */}
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mb-8">
               Data Science, UI/UX, Web Development, Data Analyst, dan Machine Learning. Universitas Negeri Surabaya, Jawa Timur.
             </p>
 
             {/* Call To Action Buttons (3 Pill Buttons: Blue, White, White) */}
             <div className="flex flex-wrap items-center gap-3">
-              {/* Button 1: "Lihat proyek" (Vibrant Blue Pill) */}
               <button
                 onClick={scrollToProjects}
                 className="px-6 py-3 rounded-full bg-[#3B66F5] hover:bg-[#2B54E0] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(59,102,245,0.32)] hover:shadow-[0_10px_24px_rgba(59,102,245,0.42)] active:scale-[0.98] transition-all flex items-center gap-2"
@@ -297,7 +360,6 @@ export default function Hero() {
                 Lihat proyek
               </button>
 
-              {/* Button 2: "Hubungi aku" (White Pill Bordered) */}
               <button
                 onClick={scrollToContact}
                 className="px-6 py-3 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200/90 font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all"
@@ -305,7 +367,6 @@ export default function Hero() {
                 Hubungi aku
               </button>
 
-              {/* Button 3: "LinkedIn" (White Pill Bordered) */}
               <a
                 href="https://linkedin.com/in/kartika-nur-savira"
                 target="_blank"
@@ -317,16 +378,16 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN: 3D Geometry, Half-Body Cropped Photo & Floating Badges ─── */}
+          {/* ─── RIGHT COLUMN: 3D Torus, Cropped Half-Body Photo & Floating Badges ─── */}
           <div className="lg:col-span-6 xl:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[520px]">
 
-            {/* 1. 3D Torus Knot Wireframe SVG Background */}
+            {/* 1. 3D Torus Wireframe SVG Background */}
             <TorusWireframe mouseX={mouse.x} mouseY={mouse.y} />
 
             {/* 2. Floating Isometric 3D Cube */}
             <IsometricCube />
 
-            {/* 3. Floating Amber Spheres (Matches Yellow Circles in Reference) */}
+            {/* 3. Floating Amber Spheres */}
             <div
               className="absolute -right-2 sm:right-6 top-16 w-8 h-8 rounded-full bg-gradient-to-tr from-amber-400 to-amber-300 shadow-[0_4px_16px_rgba(251,191,36,0.55)] pointer-events-none animate-float-slow z-[5]"
               style={{
@@ -359,13 +420,12 @@ export default function Hero() {
                 sizes="(max-width: 768px) 300px, 380px"
               />
 
-              {/* Soft bottom subtle gradient overlay for seamless look */}
               <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-900/10 to-transparent pointer-events-none" />
             </div>
 
-            {/* ─── 5. Floating Badge Pills (Exact Match to Reference Screenshot) ─── */}
+            {/* ─── 5. Floating Badge Pills Around Photo ─── */}
 
-            {/* Badge A: "🎨 UI/UX" (Top Center / Left) */}
+            {/* Badge A: "🎨 UI/UX" */}
             <div
               className="absolute top-6 left-12 sm:left-16 z-20 pointer-events-auto"
               style={{
@@ -381,7 +441,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge B: "💻 Web Dev" (Top Right) */}
+            {/* Badge B: "💻 Web Dev" */}
             <div
               className="absolute top-20 right-0 sm:-right-4 z-20 pointer-events-auto"
               style={{
@@ -397,7 +457,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge C: "📊 Data Analyst" (Bottom Left of photo) */}
+            {/* Badge C: "📊 Data Analyst" */}
             <div
               className="absolute bottom-16 -left-3 sm:left-4 z-20 pointer-events-auto"
               style={{
@@ -413,7 +473,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Badge D: "⚙️ Backend" (Bottom Right of photo) */}
+            {/* Badge D: "⚙️ Backend" */}
             <div
               className="absolute bottom-6 right-2 sm:right-6 z-20 pointer-events-auto"
               style={{
@@ -431,17 +491,86 @@ export default function Hero() {
 
           </div>
         </div>
+
+        {/* Scroll Indicator Bar (Restored from Original Design) */}
+        <div className="flex items-center justify-between border-t border-[#0B1F3A]/15 pt-5 text-xs font-bold uppercase tracking-[0.18em] text-[#24577A] mt-8">
+          <span className="flex items-center gap-2">
+            <ArrowDown size={14} className="animate-bounce" /> Scroll to explore
+          </span>
+          <span className="hidden md:block">Data · Models · Stories</span>
+          <span>01 / 08</span>
+        </div>
       </div>
 
-      {/* ─── BOTTOM CONTINUOUS MARQUEE TICKER (Matches Bottom of Screenshot) ─── */}
-      <div className="w-full border-y border-slate-200/70 bg-white/80 backdrop-blur-sm py-3.5 overflow-hidden">
-        <div className="flex w-max items-center gap-8 animate-marquee whitespace-nowrap text-xs font-bold text-slate-600 tracking-wide uppercase select-none">
+      {/* ════════════════════════════════════════════════════════════════════════════════
+          2. MARQUEE RUNNING TICKER
+         ════════════════════════════════════════════════════════════════════════════════ */}
+      <div className="w-full border-y border-slate-200/80 bg-[#E8F5FD]/85 backdrop-blur-sm py-3.5 overflow-hidden">
+        <div className="flex w-max items-center gap-8 animate-marquee whitespace-nowrap text-xs font-extrabold text-[#1E3A8A] tracking-wider uppercase select-none">
           {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
             <span key={idx} className="flex items-center gap-8">
               <span>{item}</span>
-              <span className="w-2 h-2 rounded-full bg-amber-400 inline-block shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-[#D97706] inline-block shrink-0" />
             </span>
           ))}
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════════════════════════
+          3. BAGIAN BAWAH HERO (Intro Section & Download CV / View Work - Restored)
+         ════════════════════════════════════════════════════════════════════════════════ */}
+      <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-20 md:px-10 lg:grid-cols-2 lg:items-center lg:gap-20 lg:py-28">
+        <div className="hero-intro-art">
+          <div className="hero-intro-grid" aria-hidden="true" />
+          <div className="hero-intro-card">
+            <span>KNS</span>
+            <small>DATA<br />SCIENCE</small>
+          </div>
+          <div className="hero-intro-sticker">ANALYZE · BUILD · SHARE</div>
+        </div>
+
+        <div>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#0B1F3A] px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#A8E6FF]">
+            <Sparkles size={13} /> Available for internships &amp; projects
+          </div>
+
+          <h2 className="max-w-xl text-4xl font-extrabold leading-[1.05] tracking-[-0.05em] text-[#0B1F3A] sm:text-5xl md:text-6xl">
+            Hi, I&apos;m <em className="text-[#168AC2]">Kartika<br />Nur Savira.</em>
+          </h2>
+
+          <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-[#0B1F3A]">
+            <span className="rounded-full border border-[#0B1F3A]/20 bg-white/60 px-4 py-2">
+              Data Science Undergraduate
+            </span>
+            <span className="rounded-full border border-[#0B1F3A]/20 bg-white/60 px-4 py-2">
+              AI &amp; ML Enthusiast
+            </span>
+          </div>
+
+          <p className="mt-6 max-w-lg text-base sm:text-lg font-medium leading-relaxed text-[#24516C]">
+            Data Science undergraduate at Universitas Negeri Surabaya, turning curiosity into practical insights through{' '}
+            <span className="typewriter-cursor text-[#168AC2] font-bold">
+              {displayedIntro}
+            </span>
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <MagneticButton
+              onClick={scrollToProjects}
+              className="group inline-flex items-center gap-2 rounded-full bg-[#0B1F3A] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#168AC2] hover:shadow-lg hover:shadow-[#168AC2]/25"
+            >
+              View work{' '}
+              <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </MagneticButton>
+
+            <MagneticLink
+              href="/cv-kartika-nur-savira.pdf"
+              download
+              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0B1F3A] bg-white/60 px-6 py-3 text-sm font-bold text-[#0B1F3A] transition hover:bg-white hover:shadow-lg"
+            >
+              <Download size={15} /> Download CV
+            </MagneticLink>
+          </div>
         </div>
       </div>
     </section>
