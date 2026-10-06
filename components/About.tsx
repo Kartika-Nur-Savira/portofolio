@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Sparkles } from 'lucide-react';
 import { useTilt } from '@/hooks/useTilt';
 
@@ -57,12 +58,17 @@ export default function About() {
           >
             <div className="relative mx-auto max-w-sm" {...tiltProps}>
               {/* Photo placeholder */}
-              <div className="relative aspect-[4/5] rounded-[24px] bg-gradient-to-br from-[#168AC2] to-[#0B1F3A] overflow-hidden flex items-center justify-center shadow-2xl border-4 border-[#168AC2]/30">
-                <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-                <span className="relative text-7xl font-black text-white/90 tracking-tighter">KNS</span>
+              <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden flex items-center justify-center shadow-2xl border-4 border-[#168AC2]/30 bg-slate-900">
+                <Image
+                  src="/images/profile-crop-half.jpg"
+                  alt="Kartika Nur Savira"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 300px, 400px"
+                />
 
                 {/* Sticker */}
-                <div className="absolute bottom-5 left-5 rounded-full bg-white px-4 py-2 text-[10px] font-extrabold uppercase tracking-wider text-[#0B1F3A] shadow-lg">
+                <div className="absolute bottom-5 left-5 rounded-full bg-white/95 backdrop-blur-md px-4 py-2 text-[10px] font-extrabold uppercase tracking-wider text-[#0B1F3A] shadow-lg z-10">
                   Data Science
                 </div>
               </div>
