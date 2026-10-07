@@ -128,9 +128,9 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
     >
       <defs>
         <linearGradient id="torusGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.8" />
-          <stop offset="50%" stopColor="#6366F1" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="#93C5FD" stopOpacity="0.4" />
+          <stop offset="0%" stopColor="#0B1F3A" stopOpacity="0.85" />
+          <stop offset="50%" stopColor="#1E3A8A" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="#2563EB" stopOpacity="0.5" />
         </linearGradient>
       </defs>
 
@@ -152,7 +152,7 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
           key={`long-${idx}`}
           d={l.d}
           fill="none"
-          stroke="#4F46E5"
+          stroke="#1E3A8A"
           strokeWidth="1"
           strokeOpacity={l.zAvg > 0 ? '0.6' : '0.25'}
         />
@@ -178,32 +178,32 @@ function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) 
 function IsometricCube() {
   return (
     <div className="absolute -left-4 sm:-left-8 top-[36%] z-[15] pointer-events-none animate-float-medium">
-      <svg width="70" height="70" viewBox="0 0 100 100" className="drop-shadow-[0_8px_16px_rgba(59,130,246,0.25)]">
+      <svg width="70" height="70" viewBox="0 0 100 100" className="drop-shadow-[0_8px_16px_rgba(11,31,58,0.22)]">
         <polygon
           points="50,15 85,35 50,55 15,35"
           fill="#93C5FD"
-          fillOpacity="0.45"
-          stroke="#3B82F6"
+          fillOpacity="0.4"
+          stroke="#1E3A8A"
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
         <polygon
           points="15,35 50,55 50,90 15,70"
-          fill="#3B82F6"
-          fillOpacity="0.35"
-          stroke="#2563EB"
+          fill="#1E3A8A"
+          fillOpacity="0.3"
+          stroke="#0B1F3A"
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
         <polygon
           points="50,55 85,35 85,70 50,90"
-          fill="#60A5FA"
+          fill="#2563EB"
           fillOpacity="0.25"
-          stroke="#3B82F6"
+          stroke="#1E3A8A"
           strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        <line x1="50" y1="55" x2="50" y2="15" stroke="#60A5FA" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+        <line x1="50" y1="55" x2="50" y2="15" stroke="#1E3A8A" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
       </svg>
     </div>
   );
@@ -282,7 +282,7 @@ export default function Hero() {
             <h1 className="text-5xl sm:text-6xl md:text-[68px] font-black tracking-[-0.035em] text-[#0F172A] leading-[1.05] mb-5">
               Halo, I'm <br />
               <span className="text-[#0F172A]">Kartika Nur</span> <br />
-              <span className="bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#4F46E5] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0B1F3A] via-[#1E3A8A] to-[#2563EB] bg-clip-text text-transparent">
                 Savira.
               </span>
             </h1>
@@ -302,7 +302,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={scrollToProjects}
-                className="px-6 py-3 rounded-full bg-[#3B66F5] hover:bg-[#2B54E0] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(59,102,245,0.32)] hover:shadow-[0_10px_24px_rgba(59,102,245,0.42)] active:scale-[0.98] transition-all flex items-center gap-2"
+                className="px-6 py-3 rounded-full bg-gradient-to-r from-[#0B1F3A] via-[#102A4C] to-[#1E3A8A] hover:from-[#102A4C] hover:to-[#2563EB] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(11,31,58,0.28)] hover:shadow-[0_12px_24px_rgba(11,31,58,0.38)] active:scale-[0.98] transition-all flex items-center gap-2"
               >
                 View Work <ArrowUpRight size={14} />
               </button>

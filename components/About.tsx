@@ -137,7 +137,9 @@ export default function About() {
             {/* 2. Main Title: Editorial Serif / Italic (Blue / Navy Brand Palette) */}
             <h2 className="text-5xl sm:text-6xl md:text-[64px] font-black tracking-tight leading-[1.06] text-[#0B1F3A] font-serif italic mb-6">
               Hi, I&apos;m <span className="text-[#0B1F3A]">Kartika</span> <br />
-              <span className="text-[#168AC2]">Nur Savira</span>
+              <span className="bg-gradient-to-r from-[#0B1F3A] via-[#1E3A8A] to-[#2563EB] bg-clip-text text-transparent">
+                Nur Savira
+              </span>
             </h2>
 
             {/* 3. Role Badges: Navy rounded pills */}
@@ -171,7 +173,7 @@ export default function About() {
               {/* Button 1: "View Work →" */}
               <button
                 onClick={scrollToProjects}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#0B1F3A] hover:bg-[#168AC2] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(11,31,58,0.22)] hover:shadow-[0_12px_24px_rgba(22,138,194,0.3)] active:scale-[0.98] transition-all"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#0B1F3A] via-[#102A4C] to-[#1E3A8A] hover:from-[#102A4C] hover:to-[#2563EB] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(11,31,58,0.25)] hover:shadow-[0_12px_24px_rgba(11,31,58,0.35)] active:scale-[0.98] transition-all"
               >
                 View Work <ArrowRight size={16} />
               </button>
