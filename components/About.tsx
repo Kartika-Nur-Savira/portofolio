@@ -122,7 +122,68 @@ export default function About() {
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 z-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
           
-          {/* ─── LEFT COLUMN: Unobstructed, Crystal-Clear Typography & Description ─── */}
+          {/* ─── LEFT COLUMN: Framed Photo Card with Orbital Tech Rings & Floating Pills ─── */}
+          <div
+            className={`lg:col-span-5 flex items-center justify-center transition-all duration-700 delay-150 ${
+              inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+          >
+            <div className="relative w-full max-w-[390px] sm:max-w-[430px]" {...tiltProps}>
+              
+              {/* 1. Animated Tech Orbitals (Behind Card Only) */}
+              <OrbitalTechRings />
+
+              {/* 2. Floating Interactive Badges Around Photo Card */}
+              {/* Badge Top-Left: Data Analytics */}
+              <div className="absolute -top-3 -left-4 sm:-left-6 z-30 animate-float-slow">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                  <span className="w-2 h-2 rounded-full bg-[#168AC2] animate-ping inline-block" />
+                  <BarChart3 size={13} className="text-[#168AC2]" />
+                  <span>Data Analytics</span>
+                </div>
+              </div>
+
+              {/* Badge Bottom-Right: SQL & Python */}
+              <div className="absolute -bottom-3 -right-3 sm:-right-5 z-30 animate-float-medium">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                  <Database size={13} className="text-[#0284C7]" />
+                  <span>SQL &amp; Python</span>
+                </div>
+              </div>
+
+              {/* 3. Framed Photo Card with Crisp White Border and Soft Blue Shadow */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(11,31,58,0.18)] border-4 border-white bg-slate-100 transition-transform duration-300">
+                
+                {/* Subtle gradient vignette at bottom so badges stand out with clarity */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none z-10" />
+                
+                {/* Photo: High-Res Cafe Portrait with Original Background Intact */}
+                <Image
+                  src="/images/profile-cafe.jpg"
+                  alt="Kartika Nur Savira"
+                  fill
+                  priority
+                  className="object-cover object-[50%_32%] select-none transition-transform duration-500 hover:scale-[1.03]"
+                  sizes="(max-width: 768px) 360px, 440px"
+                />
+
+                {/* Bottom Left Badge: Data Science */}
+                <div className="absolute bottom-4 left-4 rounded-full bg-white/95 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] shadow-md z-20">
+                  Data Science
+                </div>
+
+                {/* Bottom Right Badge: UNESA */}
+                <div className="absolute bottom-4 right-4 rounded-full bg-[#0B1F3A]/90 border border-white/20 backdrop-blur-md px-3 py-1 text-[9px] font-extrabold uppercase tracking-widest text-[#E0F2FE] shadow-md z-20">
+                  UNESA
+                </div>
+              </div>
+
+              {/* 4. Floating Ambient Glow Behind Card (Blue & Cyan Glow) */}
+              <div className="absolute -inset-3 bg-gradient-to-tr from-[#168AC2]/30 via-sky-400/25 to-[#0B1F3A]/25 rounded-[34px] blur-2xl -z-20 pointer-events-none animate-pulse" />
+            </div>
+          </div>
+
+          {/* ─── RIGHT COLUMN: Unobstructed Typography & Description ─── */}
           <div
             className={`lg:col-span-7 flex flex-col items-start transition-all duration-700 ${
               inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -186,67 +247,6 @@ export default function About() {
               >
                 Download CV <Download size={15} />
               </a>
-            </div>
-          </div>
-
-          {/* ─── RIGHT COLUMN: Framed Photo Card with Orbital Tech Rings & Floating Pills ─── */}
-          <div
-            className={`lg:col-span-5 flex items-center justify-center transition-all duration-700 delay-150 ${
-              inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}
-          >
-            <div className="relative w-full max-w-[390px] sm:max-w-[430px]" {...tiltProps}>
-              
-              {/* 1. Animated Tech Orbitals (Behind Card Only) */}
-              <OrbitalTechRings />
-
-              {/* 2. Floating Interactive Badges Around Photo Card */}
-              {/* Badge Top-Left: Data Analytics */}
-              <div className="absolute -top-3 -left-4 sm:-left-6 z-30 animate-float-slow">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
-                  <span className="w-2 h-2 rounded-full bg-[#168AC2] animate-ping inline-block" />
-                  <BarChart3 size={13} className="text-[#168AC2]" />
-                  <span>Data Analytics</span>
-                </div>
-              </div>
-
-              {/* Badge Bottom-Right: SQL & Python */}
-              <div className="absolute -bottom-3 -right-3 sm:-right-5 z-30 animate-float-medium">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
-                  <Database size={13} className="text-[#0284C7]" />
-                  <span>SQL &amp; Python</span>
-                </div>
-              </div>
-
-              {/* 3. Framed Photo Card with Crisp White Border and Soft Blue Shadow */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(11,31,58,0.18)] border-4 border-white bg-slate-100 transition-transform duration-300">
-                
-                {/* Subtle gradient vignette at bottom so badges stand out with clarity */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none z-10" />
-                
-                {/* Photo: High-Res Cafe Portrait with Original Background Intact */}
-                <Image
-                  src="/images/profile-cafe.jpg"
-                  alt="Kartika Nur Savira"
-                  fill
-                  priority
-                  className="object-cover object-[50%_32%] select-none transition-transform duration-500 hover:scale-[1.03]"
-                  sizes="(max-width: 768px) 360px, 440px"
-                />
-
-                {/* Bottom Left Badge: Data Science */}
-                <div className="absolute bottom-4 left-4 rounded-full bg-white/95 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] shadow-md z-20">
-                  Data Science
-                </div>
-
-                {/* Bottom Right Badge: UNESA */}
-                <div className="absolute bottom-4 right-4 rounded-full bg-[#0B1F3A]/90 border border-white/20 backdrop-blur-md px-3 py-1 text-[9px] font-extrabold uppercase tracking-widest text-[#E0F2FE] shadow-md z-20">
-                  UNESA
-                </div>
-              </div>
-
-              {/* 4. Floating Ambient Glow Behind Card (Blue & Cyan Glow) */}
-              <div className="absolute -inset-3 bg-gradient-to-tr from-[#168AC2]/30 via-sky-400/25 to-[#0B1F3A]/25 rounded-[34px] blur-2xl -z-20 pointer-events-none animate-pulse" />
             </div>
           </div>
 
