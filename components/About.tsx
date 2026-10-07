@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { ArrowRight, Download, Sparkles } from 'lucide-react';
+import { ArrowRight, Download, Sparkles, BarChart3, Database } from 'lucide-react';
 import { useTilt } from '@/hooks/useTilt';
 
 function useInView(threshold = 0.2) {
@@ -19,151 +19,86 @@ function useInView(threshold = 0.2) {
   return { ref, inView };
 }
 
-// ─── 3D Particle / Dot Wave Mesh Background (Animated 60 FPS Canvas) ───
-function DotWaveBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animId: number;
-    let time = 0;
-    let isVisible = true;
-
-    // Handle Resize & Retina DPI
-    const handleResize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    // IntersectionObserver to pause loop when scrolled out of view (saves battery/CPU)
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisible = entry.isIntersecting;
-      },
-      { threshold: 0.05 }
-    );
-    observer.observe(canvas);
-
-    const numCurves = 24;
-    const dotsPerCurve = 36;
-
-    const render = () => {
-      if (!isVisible) {
-        animId = requestAnimationFrame(render);
-        return;
-      }
-
-      time += 0.024;
-      const rect = canvas.getBoundingClientRect();
-      const width = rect.width;
-      const height = rect.height;
-
-      // Coordinate scaling base (virtual 1000x620 coordinate space)
-      const scaleX = width / 1000;
-      const scaleY = height / 620;
-
-      ctx.clearRect(0, 0, width, height);
-
-      // 1. Draw parametric undulating stream curves (Waves in Blue & Cyan)
-      for (let c = 0; c < numCurves; c++) {
-        const curveFactor = c / numCurves;
-        const isDeepBlue = curveFactor < 0.55;
-        const color = isDeepBlue
-          ? (c % 2 === 0 ? '#168AC2' : '#0284C7')
-          : (c % 2 === 0 ? '#0EA5E9' : '#38BDF8');
-
-        for (let d = 0; d < dotsPerCurve; d++) {
-          const t = d / dotsPerCurve;
-          
-          // Fluid harmonic undulation math
-          const wavePhase = t * 4.8 - time * 1.6 + c * 0.24;
-          const waveOffsetY = Math.sin(wavePhase) * 18 + Math.cos(c * 0.35 + time * 1.1) * 9;
-          const waveOffsetX = Math.sin(t * 3.4 + time * 1.2 + c * 0.2) * 8;
-
-          // Parametric curve anchor
-          const baseX = 440 + c * 24 - t * 480 + Math.sin(t * Math.PI) * 110;
-          const baseY = 25 + t * 440 + Math.sin(c * 0.4 + t * 2.5) * 45;
-
-          const x = (baseX + waveOffsetX) * scaleX;
-          const y = (baseY + waveOffsetY) * scaleY;
-
-          // Radii and opacity pulsation
-          const distFromCenter = Math.abs(t - 0.5) * 2;
-          const pulse = Math.sin(wavePhase * 1.1) * 0.35;
-          const baseR = (1.3 + (1 - distFromCenter) * 1.7 + (c % 3 === 0 ? 0.7 : 0) + pulse) * Math.min(scaleX, scaleY);
-          const opacity = Math.max(
-            0.12,
-            Math.min(0.85, 0.28 + (1 - distFromCenter * 0.4) * 0.52 + Math.cos(wavePhase) * 0.12)
-          );
-
-          ctx.beginPath();
-          ctx.arc(x, y, Math.max(1, baseR), 0, Math.PI * 2);
-          ctx.fillStyle = color;
-          ctx.globalAlpha = opacity;
-          ctx.fill();
-        }
-      }
-
-      // 2. Draw ambient floating orbs
-      const ambientDots = [
-        { cx: 880, cy: 90, r: 5, color: '#38BDF8', speed: 1.1, phase: 0 },
-        { cx: 930, cy: 140, r: 6, color: '#38BDF8', speed: 0.9, phase: 1.2 },
-        { cx: 960, cy: 260, r: 7, color: '#38BDF8', speed: 1.3, phase: 2.1 },
-        { cx: 940, cy: 340, r: 8, color: '#38BDF8', speed: 0.8, phase: 3.5 },
-        { cx: 890, cy: 400, r: 8.5, color: '#38BDF8', speed: 1.0, phase: 4.2 },
-        { cx: 830, cy: 460, r: 7, color: '#38BDF8', speed: 1.2, phase: 5.1 },
-        { cx: 770, cy: 500, r: 6, color: '#38BDF8', speed: 0.9, phase: 0.7 },
-        { cx: 680, cy: 530, r: 5, color: '#38BDF8', speed: 1.1, phase: 1.8 },
-        { cx: 580, cy: 560, r: 6, color: '#38BDF8', speed: 1.4, phase: 2.9 },
-        { cx: 480, cy: 580, r: 6.5, color: '#38BDF8', speed: 0.7, phase: 4.0 },
-        { cx: 80, cy: 200, r: 4.5, color: '#7DD3FC', speed: 1.0, phase: 3.1 },
-        { cx: 120, cy: 480, r: 5, color: '#38BDF8', speed: 1.2, phase: 2.4 },
-      ];
-
-      for (const dot of ambientDots) {
-        const floatY = Math.sin(time * dot.speed + dot.phase) * 14;
-        const floatX = Math.cos(time * dot.speed * 0.7 + dot.phase) * 8;
-        const x = (dot.cx + floatX) * scaleX;
-        const y = (dot.cy + floatY) * scaleY;
-        const r = dot.r * Math.min(scaleX, scaleY);
-
-        ctx.beginPath();
-        ctx.arc(x, y, Math.max(2, r), 0, Math.PI * 2);
-        ctx.fillStyle = dot.color;
-        ctx.globalAlpha = 0.55 + Math.sin(time * dot.speed) * 0.2;
-        ctx.fill();
-      }
-
-      ctx.globalAlpha = 1;
-      animId = requestAnimationFrame(render);
-    };
-
-    animId = requestAnimationFrame(render);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
-      observer.disconnect();
-    };
-  }, []);
-
+// ─── Clean Ambient Background (Ensures 100% Text Legibility) ───
+function AboutBackground() {
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none select-none z-0"
-      aria-hidden="true"
-    />
+    <div className="absolute inset-0 pointer-events-none select-none overflow-hidden -z-10" aria-hidden="true">
+      {/* 1. Subtle Architectural Micro-Grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#0B1F3A_1px,transparent_1px)] [background-size:28px_28px] opacity-[0.035]" />
+
+      {/* 2. Soft Ambient Blurred Aurora Lights (Right & Corners) */}
+      <div className="absolute -top-24 -right-24 w-[560px] h-[560px] rounded-full bg-gradient-to-br from-[#38BDF8]/20 via-[#168AC2]/15 to-transparent blur-[110px] animate-float-slow" />
+      <div className="absolute -bottom-24 right-1/4 w-[480px] h-[480px] rounded-full bg-gradient-to-tr from-[#168AC2]/20 via-sky-200/25 to-transparent blur-[100px] animate-float-medium" />
+      <div className="absolute top-1/3 -left-32 w-[380px] h-[380px] rounded-full bg-sky-100/40 blur-[90px] pointer-events-none" />
+    </div>
+  );
+}
+
+// ─── 3D Orbital Tech Rings (Positioned Behind Photo Card on Right) ───
+function OrbitalTechRings() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10 select-none overflow-visible">
+      {/* Outer Rotating Dashed Orbit */}
+      <svg
+        viewBox="0 0 560 560"
+        className="w-[500px] h-[500px] sm:w-[560px] sm:h-[560px] animate-[spin_55s_linear_infinite] opacity-60"
+        aria-hidden="true"
+      >
+        <circle
+          cx="280"
+          cy="280"
+          r="255"
+          fill="none"
+          stroke="#168AC2"
+          strokeWidth="1.2"
+          strokeDasharray="6 14"
+          strokeOpacity="0.45"
+        />
+        {/* Orbital Satellite Dots */}
+        <circle cx="280" cy="25" r="4.5" fill="#38BDF8" className="animate-pulse" />
+        <circle cx="280" cy="535" r="3" fill="#168AC2" />
+        <circle cx="25" cy="280" r="3.5" fill="#0284C7" />
+        <circle cx="535" cy="280" r="4" fill="#38BDF8" />
+      </svg>
+
+      {/* Middle Counter-Rotating Data Arc Ring */}
+      <svg
+        viewBox="0 0 460 460"
+        className="absolute w-[420px] h-[420px] sm:w-[460px] sm:h-[460px] animate-[spin_38s_linear_infinite_reverse] opacity-75"
+        aria-hidden="true"
+      >
+        <circle
+          cx="230"
+          cy="230"
+          r="200"
+          fill="none"
+          stroke="#0284C7"
+          strokeWidth="1.4"
+          strokeDasharray="24 36 8 16"
+          strokeOpacity="0.5"
+        />
+        <circle cx="430" cy="230" r="4" fill="#38BDF8" />
+        <circle cx="30" cy="230" r="3" fill="#0EA5E9" />
+      </svg>
+
+      {/* Inner Subtle Rotating Ring */}
+      <svg
+        viewBox="0 0 380 380"
+        className="absolute w-[340px] h-[340px] sm:w-[380px] sm:h-[380px] animate-[spin_24s_linear_infinite] opacity-50"
+        aria-hidden="true"
+      >
+        <circle
+          cx="190"
+          cy="190"
+          r="165"
+          fill="none"
+          stroke="#38BDF8"
+          strokeWidth="1"
+          strokeDasharray="4 10"
+          strokeOpacity="0.55"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -178,16 +113,16 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative bg-[#F0F7FB] py-24 md:py-32 overflow-hidden text-[#0B1F3A]"
+      className="relative bg-gradient-to-b from-[#F0F7FB] via-[#F8FBFE] to-[#F0F7FB] py-24 md:py-32 overflow-hidden text-[#0B1F3A]"
       ref={ref as React.RefObject<HTMLElement>}
     >
-      {/* ─── Dynamic 3D Dot Wave Curved Mesh (Blue / Cyan) ─── */}
-      <DotWaveBackground />
+      {/* ─── Clean Ambient Background (Zero Clutter on Text) ─── */}
+      <AboutBackground />
 
       <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 z-10">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-14 items-center">
           
-          {/* ─── LEFT COLUMN: Badge, Title, Badges, Expanded Bio, Buttons ─── */}
+          {/* ─── LEFT COLUMN: Unobstructed, Crystal-Clear Typography & Description ─── */}
           <div
             className={`lg:col-span-7 flex flex-col items-start transition-all duration-700 ${
               inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -218,8 +153,8 @@ export default function About() {
               </span>
             </div>
 
-            {/* 4. Expanded Self-Description */}
-            <div className="space-y-3.5 text-slate-700 text-sm sm:text-base leading-relaxed max-w-xl mb-8 font-normal">
+            {/* 4. Expanded Self-Description (Completely Clear, High-Contrast & Readable) */}
+            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed max-w-xl mb-8 font-normal">
               <p>
                 Data Science undergraduate at Universitas Negeri Surabaya. Aspiring Data Analyst &amp; Machine Learning practitioner passionate about uncovering actionable insights through exploratory data analysis, predictive modeling, and thoughtful data storytelling.
               </p>
@@ -252,7 +187,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* ─── RIGHT COLUMN: Framed Photo Card with Background Kept Intact ─── */}
+          {/* ─── RIGHT COLUMN: Framed Photo Card with Orbital Tech Rings & Floating Pills ─── */}
           <div
             className={`lg:col-span-5 flex items-center justify-center transition-all duration-700 delay-150 ${
               inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -260,7 +195,28 @@ export default function About() {
           >
             <div className="relative w-full max-w-[390px] sm:max-w-[430px]" {...tiltProps}>
               
-              {/* Framed Photo Card with Crisp White Border and Soft Blue Shadow */}
+              {/* 1. Animated Tech Orbitals (Behind Card Only) */}
+              <OrbitalTechRings />
+
+              {/* 2. Floating Interactive Badges Around Photo Card */}
+              {/* Badge Top-Left: Data Analytics */}
+              <div className="absolute -top-3 -left-4 sm:-left-6 z-30 animate-float-slow">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                  <span className="w-2 h-2 rounded-full bg-[#168AC2] animate-ping inline-block" />
+                  <BarChart3 size={13} className="text-[#168AC2]" />
+                  <span>Data Analytics</span>
+                </div>
+              </div>
+
+              {/* Badge Bottom-Right: SQL & Python */}
+              <div className="absolute -bottom-3 -right-3 sm:-right-5 z-30 animate-float-medium">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                  <Database size={13} className="text-[#0284C7]" />
+                  <span>SQL &amp; Python</span>
+                </div>
+              </div>
+
+              {/* 3. Framed Photo Card with Crisp White Border and Soft Blue Shadow */}
               <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(11,31,58,0.18)] border-4 border-white bg-slate-100 transition-transform duration-300">
                 
                 {/* Subtle gradient vignette at bottom so badges stand out with clarity */}
@@ -287,8 +243,8 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Floating Ambient Glow Behind Card (Blue & Cyan Glow) */}
-              <div className="absolute -inset-2 bg-gradient-to-tr from-[#168AC2]/30 via-sky-400/25 to-[#0B1F3A]/25 rounded-[34px] blur-xl -z-10 pointer-events-none animate-pulse" />
+              {/* 4. Floating Ambient Glow Behind Card (Blue & Cyan Glow) */}
+              <div className="absolute -inset-3 bg-gradient-to-tr from-[#168AC2]/30 via-sky-400/25 to-[#0B1F3A]/25 rounded-[34px] blur-2xl -z-20 pointer-events-none animate-pulse" />
             </div>
           </div>
 
