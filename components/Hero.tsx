@@ -22,12 +22,6 @@ const roles = [
   'Machine Learning',
 ];
 
-const introTypewriterTexts = [
-  'data visualization',
-  'machine learning',
-  'thoughtful problem solving',
-  'data engineering',
-];
 
 const marqueeItems = [
   'Data Science',
@@ -253,10 +247,6 @@ export default function Hero() {
   const [displayedRole, setDisplayedRole] = useState('');
   const [isDeletingRole, setIsDeletingRole] = useState(false);
 
-  // Bottom section intro typewriter
-  const [introIndex, setIntroIndex] = useState(0);
-  const [displayedIntro, setDisplayedIntro] = useState('');
-  const [isDeletingIntro, setIsDeletingIntro] = useState(false);
 
   // Typewriter for top role tag
   useEffect(() => {
@@ -281,22 +271,7 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [displayedRole, isDeletingRole, roleIndex]);
 
-  // Typewriter for bottom intro paragraph
-  useEffect(() => {
-    const currentWord = introTypewriterTexts[introIndex];
-    let timeout: NodeJS.Timeout;
-    if (!isDeletingIntro && displayedIntro.length < currentWord.length) {
-      timeout = setTimeout(() => setDisplayedIntro(currentWord.slice(0, displayedIntro.length + 1)), 60);
-    } else if (!isDeletingIntro && displayedIntro.length === currentWord.length) {
-      timeout = setTimeout(() => setIsDeletingIntro(true), 2000);
-    } else if (isDeletingIntro && displayedIntro.length > 0) {
-      timeout = setTimeout(() => setDisplayedIntro(displayedIntro.slice(0, -1)), 35);
-    } else if (isDeletingIntro && displayedIntro.length === 0) {
-      setIsDeletingIntro(false);
-      setIntroIndex((prev) => (prev + 1) % introTypewriterTexts.length);
-    }
-    return () => clearTimeout(timeout);
-  }, [displayedIntro, isDeletingIntro, introIndex]);
+
 
   const scrollToProjects = () => {
     document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
@@ -515,64 +490,25 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* ════════════════════════════════════════════════════════════════════════════════
-          3. BAGIAN BAWAH HERO (Intro Section & Download CV / View Work)
-         ════════════════════════════════════════════════════════════════════════════════ */}
-      <div className="mx-auto grid max-w-[1180px] gap-12 px-5 py-20 md:px-10 lg:grid-cols-2 lg:items-center lg:gap-20 lg:py-28">
-        <div className="hero-intro-art">
-          <div className="hero-intro-grid" aria-hidden="true" />
-          <div className="hero-intro-card">
-            <span>KNS</span>
-            <small>DATA<br />SCIENCE</small>
-          </div>
-          <div className="hero-intro-sticker">ANALYZE · BUILD · SHARE</div>
-        </div>
-
-        <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#0B1F3A] px-4 py-2 text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#A8E6FF]">
-            <Sparkles size={13} /> Available for internships &amp; projects
-          </div>
-
-          <h2 className="max-w-xl text-4xl font-extrabold leading-[1.05] tracking-[-0.05em] text-[#0B1F3A] sm:text-5xl md:text-6xl">
-            Hi, I&apos;m <em className="text-[#168AC2]">Kartika<br />Nur Savira.</em>
-          </h2>
-
-          <div className="mt-6 flex flex-wrap gap-2 text-xs font-bold text-[#0B1F3A]">
-            <span className="rounded-full border border-[#0B1F3A]/20 bg-white/60 px-4 py-2">
-              Data Science Undergraduate
-            </span>
-            <span className="rounded-full border border-[#0B1F3A]/20 bg-white/60 px-4 py-2">
-              AI &amp; ML Enthusiast
-            </span>
-          </div>
-
-          <p className="mt-6 max-w-lg text-base sm:text-lg font-medium leading-relaxed text-[#24516C]">
-            Data Science undergraduate at Universitas Negeri Surabaya, turning curiosity into practical insights through{' '}
-            <span className="typewriter-cursor text-[#168AC2] font-bold">
-              {displayedIntro}
-            </span>
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            <MagneticButton
-              onClick={scrollToProjects}
-              className="group inline-flex items-center gap-2 rounded-full bg-[#0B1F3A] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#168AC2] hover:shadow-lg hover:shadow-[#168AC2]/25"
-            >
-              View work{' '}
-              <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </MagneticButton>
-
-            <MagneticLink
-              href="/cv-kartika-nur-savira.pdf"
-              download
-              className="inline-flex items-center gap-2 rounded-full border-2 border-[#0B1F3A] bg-white/60 px-6 py-3 text-sm font-bold text-[#0B1F3A] transition hover:bg-white hover:shadow-lg"
-            >
-              <Download size={15} /> Download CV
-            </MagneticLink>
-          </div>
-        </div>
-      </div>
+      <style jsx global>{`
+        @keyframes marqueeContinuous {
+          0% {
+            transform: translate3d(0, 0, 0);
+          }
+          100% {
+            transform: translate3d(-50%, 0, 0);
+          }
+        }
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          animation: marqueeContinuous 24s linear infinite;
+          will-change: transform;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   );
 }
