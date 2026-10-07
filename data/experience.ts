@@ -2,12 +2,11 @@ export interface ExperienceItem {
   id: string;
   organization: string;
   role: string;
-  location?: string;
   period: string;
   type: 'work' | 'organization' | 'community';
   typeLabel: string;
-  responsibilities: string[];
-  tags?: string[];
+  bullets: string[];
+  tags: string[];
 }
 
 export const experiences: ExperienceItem[] = [
@@ -15,44 +14,37 @@ export const experiences: ExperienceItem[] = [
     id: 'bps-pekalongan',
     organization: 'BPS Kota Pekalongan',
     role: 'Junior Data Analyst',
-    location: 'Pekalongan, Central Java',
     period: '2024',
     type: 'work',
-    typeLabel: 'Work & Professional',
-    responsibilities: [
-      'Processed and organized survey datasets using Microsoft Excel, producing structured data for reporting and analysis.',
-      'Compiled statistical data to support the preparation of Kota Pekalongan\'s statistical report.',
-      'Prepared data-based publication materials using Sakernas labor-force indicators (TPAK, TKK, and TPT).',
-      'Compiled and organized SE2026 partner recruitment data to support reporting activities.',
+    typeLabel: 'Work Experience',
+    bullets: [
+      'Processed & organized survey datasets using Excel to support Kota Pekalongan\'s regional statistical report.',
+      'Prepared data publications based on Sakernas labor indicators (TPAK, TKK, TPT) and organized SE2026 partner data.',
     ],
-    tags: ['Microsoft Excel', 'Statistical Analysis', 'Sakernas (TPAK, TKK, TPT)', 'Data Processing', 'SE2026'],
+    tags: ['Excel', 'Sakernas (TPAK, TKK, TPT)', 'SE2026', 'Statistical Analysis'],
   },
   {
     id: 'hmp-sains-data',
     organization: 'HMP Sains Data UNESA',
     role: 'Department of Religious & Spiritual Affairs',
-    location: 'Surabaya, East Java',
     period: '2023 – 2024',
     type: 'organization',
-    typeLabel: 'Student Organization',
-    responsibilities: [
-      'Managed charity programs for orphaned children, coordinating donation collection and event execution with team members.',
-      'Coordinated departmental initiatives and supported student community development within HMP Sains Data.',
+    typeLabel: 'Organization',
+    bullets: [
+      'Managed charity programs for orphaned children, donation collection, and team event execution.',
     ],
-    tags: ['Charity Programs', 'Event Execution', 'Team Leadership', 'Community Outreach'],
+    tags: ['Charity Program', 'Event Management'],
   },
   {
     id: 'pandas-2025',
-    organization: 'PANDAS 2025 (Data Science Community Service Program)',
-    role: 'Public Relations',
-    location: 'UNESA / Community Outreach',
+    organization: 'PANDAS 2025',
+    role: 'Public Relations (Community Service)',
     period: '2025',
     type: 'community',
     typeLabel: 'Community Service',
-    responsibilities: [
-      'Coordinated communication and supported community service activities with internal and external parties.',
-      'Facilitated stakeholder engagement and strategic information distribution to ensure impactful program execution.',
+    bullets: [
+      'Coordinated internal and external communications for the Data Science Community Service Program.',
     ],
-    tags: ['Public Relations', 'External Relations', 'Stakeholder Communication', 'Community Engagement'],
+    tags: ['Public Relations', 'Community Outreach'],
   },
 ];
