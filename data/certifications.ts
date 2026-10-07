@@ -23,7 +23,7 @@ export const achievements: Achievement[] = [
     id: 'data-craft-league',
     title: '1st Place – Data Craft League',
     event: 'MATRIX SAINTAVERS 2026',
-    organizer: 'HMPS Sains Data, UIN K.H. Abdurrahman Wahid Pekalongan',
+    organizer: 'HMPS Sains Data, UIN K.H. Abdurrahman Wahid ',
     year: '2026',
     award: 'Juara 1 🏆',
     description:

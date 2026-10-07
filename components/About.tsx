@@ -242,7 +242,9 @@ export default function About() {
               {/* Button 2: "Download CV ⤓" */}
               <a
                 href="/cv-kartika-nur-savira.pdf"
-                download
+                download="CV_Kartika_Nur_Savira.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border-2 border-[#0B1F3A] text-[#0B1F3A] hover:text-[#168AC2] hover:border-[#168AC2] font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all"
               >
                 Download CV <Download size={15} />

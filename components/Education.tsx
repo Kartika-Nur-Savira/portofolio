@@ -104,7 +104,9 @@ export default function Education() {
                 </p>
                 <a
                   href="/cv-kartika-nur-savira.pdf"
-                  download
+                  download="CV_Kartika_Nur_Savira.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-semibold bg-white text-[#0B1F3A] hover:bg-sky-50 px-5 py-2.5 rounded-full transition-colors shadow-sm"
                 >
                   <Download size={14} /> Download CV

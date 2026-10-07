@@ -49,7 +49,7 @@ export const experiences: ExperienceItem[] = [
   },
   {
     id: 'pandas-2025',
-    organization: 'PANDAS 2025',
+    organization: 'PANDAS 2025 (Pengabdian Masyarakat Data Science)',
     role: 'Public Relations (Community Service)',
     period: '2025',
     type: 'community',
@@ -60,3 +60,4 @@ export const experiences: ExperienceItem[] = [
     tags: ['Public Relations', 'Community Outreach'],
   },
 ];
+
