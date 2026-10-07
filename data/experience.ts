@@ -2,56 +2,57 @@ export interface ExperienceItem {
   id: string;
   organization: string;
   role: string;
+  location?: string;
   period: string;
-  type: 'organization' | 'work' | 'study';
+  type: 'work' | 'organization' | 'community';
+  typeLabel: string;
   responsibilities: string[];
-  events?: string[];
+  tags?: string[];
 }
 
 export const experiences: ExperienceItem[] = [
   {
-    id: 'himasada',
-    organization: 'HIMASADA UNESA',
-    role: 'Staff — Department of Religious and Spiritual Affairs',
+    id: 'bps-pekalongan',
+    organization: 'BPS Kota Pekalongan',
+    role: 'Junior Data Analyst',
+    location: 'Pekalongan, Central Java',
+    period: '2024',
+    type: 'work',
+    typeLabel: 'Work & Professional',
+    responsibilities: [
+      'Processed and organized survey datasets using Microsoft Excel, producing structured data for reporting and analysis.',
+      'Compiled statistical data to support the preparation of Kota Pekalongan\'s statistical report.',
+      'Prepared data-based publication materials using Sakernas labor-force indicators (TPAK, TKK, and TPT).',
+      'Compiled and organized SE2026 partner recruitment data to support reporting activities.',
+    ],
+    tags: ['Microsoft Excel', 'Statistical Analysis', 'Sakernas (TPAK, TKK, TPT)', 'Data Processing', 'SE2026'],
+  },
+  {
+    id: 'hmp-sains-data',
+    organization: 'HMP Sains Data UNESA',
+    role: 'Department of Religious & Spiritual Affairs',
+    location: 'Surabaya, East Java',
     period: '2023 – 2024',
     type: 'organization',
+    typeLabel: 'Student Organization',
     responsibilities: [
-      'Supported organizational planning and execution of student activities',
-      'Assisted coordination of events and programs within the department',
-      'Collaborated with cross-departmental teams on community initiatives',
-      'Contributed to building a positive and inclusive student community',
+      'Managed charity programs for orphaned children, coordinating donation collection and event execution with team members.',
+      'Coordinated departmental initiatives and supported student community development within HMP Sains Data.',
     ],
-    events: ['SASOVI 2025', 'GSS 2025'],
-  },
-];
-
-export const activities = [
-  {
-    id: 'satria-data',
-    title: 'Satria Data',
-    description: 'National data science competition and academic program',
-    type: 'Competition',
-    year: '[Year]',
+    tags: ['Charity Programs', 'Event Execution', 'Team Leadership', 'Community Outreach'],
   },
   {
-    id: 'independent-study',
-    title: 'Independent Study',
-    description: 'Merdeka Belajar Kampus Merdeka (MBKM) independent learning program',
-    type: 'Program',
-    year: '[Year]',
-  },
-  {
-    id: 'aws-cloud',
-    title: 'AWS Cloud Learning',
-    description: 'Cloud computing fundamentals and AWS core services',
-    type: 'Learning',
-    year: '[Year]',
-  },
-  {
-    id: 'ds-projects',
-    title: 'Data Science Projects',
-    description: 'Machine learning, analytics, and data engineering projects',
-    type: 'Projects',
-    year: '2023 – Present',
+    id: 'pandas-2025',
+    organization: 'PANDAS 2025 (Data Science Community Service Program)',
+    role: 'Public Relations',
+    location: 'UNESA / Community Outreach',
+    period: '2025',
+    type: 'community',
+    typeLabel: 'Community Service',
+    responsibilities: [
+      'Coordinated communication and supported community service activities with internal and external parties.',
+      'Facilitated stakeholder engagement and strategic information distribution to ensure impactful program execution.',
+    ],
+    tags: ['Public Relations', 'External Relations', 'Stakeholder Communication', 'Community Engagement'],
   },
 ];
