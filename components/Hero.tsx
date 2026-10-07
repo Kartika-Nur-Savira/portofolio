@@ -195,48 +195,7 @@ function IsometricCube() {
   );
 }
 
-// ─── Magnetic Buttons ───
-function MagneticButton({ children, className, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const onMove = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-  }, []);
-  const onLeave = useCallback(() => {
-    const el = ref.current;
-    if (el) el.style.transform = 'translate(0, 0)';
-  }, []);
-  return (
-    <button ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave} style={{ transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }} {...props}>
-      {children}
-    </button>
-  );
-}
 
-function MagneticLink({ children, className, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const onMove = useCallback((e: React.MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-  }, []);
-  const onLeave = useCallback(() => {
-    const el = ref.current;
-    if (el) el.style.transform = 'translate(0, 0)';
-  }, []);
-  return (
-    <a ref={ref} className={className} onMouseMove={onMove} onMouseLeave={onLeave} style={{ transition: 'transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)' }} {...props}>
-      {children}
-    </a>
-  );
-}
 
 export default function Hero() {
   const mouse = useMousePosition();
