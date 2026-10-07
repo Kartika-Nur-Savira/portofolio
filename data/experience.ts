@@ -3,7 +3,7 @@ export interface ExperienceItem {
   organization: string;
   role: string;
   period: string;
-  type: 'work' | 'organization' | 'community';
+  type: 'work' | 'cohort' | 'organization' | 'community';
   typeLabel: string;
   bullets: string[];
   tags: string[];
@@ -18,18 +18,30 @@ export const experiences: ExperienceItem[] = [
     type: 'work',
     typeLabel: 'Work Experience',
     bullets: [
-      'Processed & organized survey datasets using Excel to support Kota Pekalongan\'s regional statistical report.',
-      'Prepared data publications based on Sakernas labor indicators (TPAK, TKK, TPT) and organized SE2026 partner data.',
+      'Processed & organized survey datasets in Excel for official Kota Pekalongan statistical reports.',
+      'Prepared data publications from Sakernas labor indicators (TPAK, TKK, TPT) and SE2026 partner data.',
     ],
     tags: ['Excel', 'Sakernas (TPAK, TKK, TPT)', 'SE2026', 'Statistical Analysis'],
   },
   {
+    id: 'cohort-asah',
+    organization: 'Cohort Asah (led by Dicoding)',
+    role: 'Data Scientist Cohort',
+    period: 'Agu 2026 – Jan 2027',
+    type: 'cohort',
+    typeLabel: 'Intensive Cohort',
+    bullets: [
+      'Selected for intensive Data Science program, focusing on predictive modeling, machine learning workflows, and data insights.',
+    ],
+    tags: ['Dicoding', 'Machine Learning', 'Data Science Track'],
+  },
+  {
     id: 'hmp-sains-data',
     organization: 'HMP Sains Data UNESA',
-    role: 'Department of Religious & Spiritual Affairs',
+    role: 'Dept. of Religious & Spiritual Affairs',
     period: '2023 – 2024',
     type: 'organization',
-    typeLabel: 'Organization',
+    typeLabel: 'Student Organization',
     bullets: [
       'Managed charity programs for orphaned children, donation collection, and team event execution.',
     ],

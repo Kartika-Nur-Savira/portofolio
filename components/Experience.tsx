@@ -2,7 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { experiences } from '@/data/experience';
-import { Sparkles, Briefcase, Users, HeartHandshake, Calendar } from 'lucide-react';
+import { Sparkles, Briefcase, Users, HeartHandshake, Calendar, GraduationCap } from 'lucide-react';
 
 function useInView(threshold = 0.15) {
   const ref = useRef<HTMLElement>(null);
@@ -34,7 +34,7 @@ export default function Experience() {
     >
       <div className="relative max-w-4xl mx-auto px-6 sm:px-8">
         
-        {/* ─── Compact Section Header ─── */}
+        {/* ─── Section Header ─── */}
         <div
           className={`mb-10 text-center transition-all duration-700 ${
             inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -59,6 +59,8 @@ export default function Experience() {
             const Icon =
               exp.type === 'work'
                 ? Briefcase
+                : exp.type === 'cohort'
+                ? GraduationCap
                 : exp.type === 'community'
                 ? HeartHandshake
                 : Users;
