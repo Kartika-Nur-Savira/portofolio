@@ -19,77 +19,151 @@ function useInView(threshold = 0.2) {
   return { ref, inView };
 }
 
-// ─── 3D Particle / Dot Wave Mesh Background (Blue / Cyan Theme) ───
+// ─── 3D Particle / Dot Wave Mesh Background (Animated 60 FPS Canvas) ───
 function DotWaveBackground() {
-  const dots = useMemo(() => {
-    const items: { cx: number; cy: number; r: number; color: string; opacity: number }[] = [];
-    const numCurves = 22;
-    const dotsPerCurve = 34;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    for (let c = 0; c < numCurves; c++) {
-      const curveFactor = c / numCurves;
-      // Interpolate colors across navy, sky blue, and vibrant cyan
-      const isDeepBlue = curveFactor < 0.55;
-      const color = isDeepBlue ? (c % 2 === 0 ? '#168AC2' : '#0284C7') : (c % 2 === 0 ? '#0EA5E9' : '#38BDF8');
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-      for (let d = 0; d < dotsPerCurve; d++) {
-        const t = d / dotsPerCurve;
-        
-        // Curved parametric streamline flowing from top-center/right to bottom-center
-        const x = 440 + c * 24 - t * 480 + Math.sin(t * Math.PI) * 110;
-        const y = 20 + t * 440 + Math.sin(c * 0.4 + t * 2.5) * 45;
-        
-        // Radii variation
-        const distFromCenter = Math.abs(t - 0.5) * 2;
-        const baseR = 1.2 + (1 - distFromCenter) * 1.6 + (c % 3 === 0 ? 0.8 : 0);
-        const opacity = 0.2 + (1 - distFromCenter * 0.4) * 0.65;
+    let animId: number;
+    let time = 0;
+    let isVisible = true;
 
-        items.push({
-          cx: x,
-          cy: y,
-          r: Math.max(1, baseR),
-          color,
-          opacity,
-        });
+    // Handle Resize & Retina DPI
+    const handleResize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    // IntersectionObserver to pause loop when scrolled out of view (saves battery/CPU)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
+
+    const numCurves = 24;
+    const dotsPerCurve = 36;
+
+    const render = () => {
+      if (!isVisible) {
+        animId = requestAnimationFrame(render);
+        return;
       }
-    }
 
-    // Larger ambient floating dots in cyan / sky blue
-    const ambientDots = [
-      { cx: 880, cy: 90, r: 5, color: '#38BDF8', opacity: 0.65 },
-      { cx: 930, cy: 140, r: 6, color: '#38BDF8', opacity: 0.5 },
-      { cx: 960, cy: 260, r: 7, color: '#38BDF8', opacity: 0.55 },
-      { cx: 940, cy: 340, r: 8, color: '#38BDF8', opacity: 0.6 },
-      { cx: 890, cy: 400, r: 9, color: '#38BDF8', opacity: 0.65 },
-      { cx: 830, cy: 460, r: 7, color: '#38BDF8', opacity: 0.6 },
-      { cx: 770, cy: 500, r: 6, color: '#38BDF8', opacity: 0.5 },
-      { cx: 680, cy: 530, r: 5, color: '#38BDF8', opacity: 0.5 },
-      { cx: 580, cy: 560, r: 6, color: '#38BDF8', opacity: 0.55 },
-      { cx: 480, cy: 580, r: 7, color: '#38BDF8', opacity: 0.6 },
-      { cx: 80, cy: 200, r: 4, color: '#7DD3FC', opacity: 0.45 },
-      { cx: 120, cy: 480, r: 5, color: '#38BDF8', opacity: 0.45 },
-    ];
+      time += 0.024;
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
 
-    return [...items, ...ambientDots];
+      // Coordinate scaling base (virtual 1000x620 coordinate space)
+      const scaleX = width / 1000;
+      const scaleY = height / 620;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw parametric undulating stream curves (Waves in Blue & Cyan)
+      for (let c = 0; c < numCurves; c++) {
+        const curveFactor = c / numCurves;
+        const isDeepBlue = curveFactor < 0.55;
+        const color = isDeepBlue
+          ? (c % 2 === 0 ? '#168AC2' : '#0284C7')
+          : (c % 2 === 0 ? '#0EA5E9' : '#38BDF8');
+
+        for (let d = 0; d < dotsPerCurve; d++) {
+          const t = d / dotsPerCurve;
+          
+          // Fluid harmonic undulation math
+          const wavePhase = t * 4.8 - time * 1.6 + c * 0.24;
+          const waveOffsetY = Math.sin(wavePhase) * 18 + Math.cos(c * 0.35 + time * 1.1) * 9;
+          const waveOffsetX = Math.sin(t * 3.4 + time * 1.2 + c * 0.2) * 8;
+
+          // Parametric curve anchor
+          const baseX = 440 + c * 24 - t * 480 + Math.sin(t * Math.PI) * 110;
+          const baseY = 25 + t * 440 + Math.sin(c * 0.4 + t * 2.5) * 45;
+
+          const x = (baseX + waveOffsetX) * scaleX;
+          const y = (baseY + waveOffsetY) * scaleY;
+
+          // Radii and opacity pulsation
+          const distFromCenter = Math.abs(t - 0.5) * 2;
+          const pulse = Math.sin(wavePhase * 1.1) * 0.35;
+          const baseR = (1.3 + (1 - distFromCenter) * 1.7 + (c % 3 === 0 ? 0.7 : 0) + pulse) * Math.min(scaleX, scaleY);
+          const opacity = Math.max(
+            0.12,
+            Math.min(0.85, 0.28 + (1 - distFromCenter * 0.4) * 0.52 + Math.cos(wavePhase) * 0.12)
+          );
+
+          ctx.beginPath();
+          ctx.arc(x, y, Math.max(1, baseR), 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.globalAlpha = opacity;
+          ctx.fill();
+        }
+      }
+
+      // 2. Draw ambient floating orbs
+      const ambientDots = [
+        { cx: 880, cy: 90, r: 5, color: '#38BDF8', speed: 1.1, phase: 0 },
+        { cx: 930, cy: 140, r: 6, color: '#38BDF8', speed: 0.9, phase: 1.2 },
+        { cx: 960, cy: 260, r: 7, color: '#38BDF8', speed: 1.3, phase: 2.1 },
+        { cx: 940, cy: 340, r: 8, color: '#38BDF8', speed: 0.8, phase: 3.5 },
+        { cx: 890, cy: 400, r: 8.5, color: '#38BDF8', speed: 1.0, phase: 4.2 },
+        { cx: 830, cy: 460, r: 7, color: '#38BDF8', speed: 1.2, phase: 5.1 },
+        { cx: 770, cy: 500, r: 6, color: '#38BDF8', speed: 0.9, phase: 0.7 },
+        { cx: 680, cy: 530, r: 5, color: '#38BDF8', speed: 1.1, phase: 1.8 },
+        { cx: 580, cy: 560, r: 6, color: '#38BDF8', speed: 1.4, phase: 2.9 },
+        { cx: 480, cy: 580, r: 6.5, color: '#38BDF8', speed: 0.7, phase: 4.0 },
+        { cx: 80, cy: 200, r: 4.5, color: '#7DD3FC', speed: 1.0, phase: 3.1 },
+        { cx: 120, cy: 480, r: 5, color: '#38BDF8', speed: 1.2, phase: 2.4 },
+      ];
+
+      for (const dot of ambientDots) {
+        const floatY = Math.sin(time * dot.speed + dot.phase) * 14;
+        const floatX = Math.cos(time * dot.speed * 0.7 + dot.phase) * 8;
+        const x = (dot.cx + floatX) * scaleX;
+        const y = (dot.cy + floatY) * scaleY;
+        const r = dot.r * Math.min(scaleX, scaleY);
+
+        ctx.beginPath();
+        ctx.arc(x, y, Math.max(2, r), 0, Math.PI * 2);
+        ctx.fillStyle = dot.color;
+        ctx.globalAlpha = 0.55 + Math.sin(time * dot.speed) * 0.2;
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(render);
+    };
+
+    animId = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <svg
-      viewBox="0 0 1000 620"
-      className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 overflow-visible opacity-75"
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none select-none z-0"
       aria-hidden="true"
-    >
-      {dots.map((dot, idx) => (
-        <circle
-          key={idx}
-          cx={dot.cx}
-          cy={dot.cy}
-          r={dot.r}
-          fill={dot.color}
-          fillOpacity={dot.opacity}
-        />
-      ))}
-    </svg>
+    />
   );
 }
 
@@ -214,7 +288,7 @@ export default function About() {
               </div>
 
               {/* Floating Ambient Glow Behind Card (Blue & Cyan Glow) */}
-              <div className="absolute -inset-2 bg-gradient-to-tr from-[#168AC2]/25 via-sky-400/20 to-[#0B1F3A]/25 rounded-[34px] blur-xl -z-10 pointer-events-none" />
+              <div className="absolute -inset-2 bg-gradient-to-tr from-[#168AC2]/30 via-sky-400/25 to-[#0B1F3A]/25 rounded-[34px] blur-xl -z-10 pointer-events-none animate-pulse" />
             </div>
           </div>
 

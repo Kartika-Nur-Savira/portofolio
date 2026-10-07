@@ -34,17 +34,31 @@ const marqueeItems = [
   'Universitas Negeri Surabaya',
 ];
 
-// ─── 3D Parametric Torus Wireframe SVG Component ───
+// ─── 3D Parametric Torus Wireframe SVG Component (Continuous 3D Auto-Rotation) ───
 function TorusWireframe({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+  const [autoAngle, setAutoAngle] = useState(0);
+
+  useEffect(() => {
+    let animId: number;
+    let t = 0;
+    const loop = () => {
+      t += 0.008; // smooth continuous 3D rotation
+      setAutoAngle(t);
+      animId = requestAnimationFrame(loop);
+    };
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
   const rings = useMemo(() => {
     const majorR = 145;
     const minorR = 68;
     const numRings = 16;
     const numSlices = 24;
 
-    const yaw = 0.55 + mouseX * 0.08;
-    const pitch = 0.42 + mouseY * 0.08;
-    const roll = -0.25;
+    const yaw = 0.55 + autoAngle + mouseX * 0.08;
+    const pitch = 0.42 + Math.sin(autoAngle * 0.5) * 0.06 + mouseY * 0.08;
+    const roll = -0.25 + Math.cos(autoAngle * 0.3) * 0.04;
 
     const cy = Math.cos(yaw), sy = Math.sin(yaw);
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
