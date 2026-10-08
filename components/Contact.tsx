@@ -27,7 +27,7 @@ const contactCards = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/kartika-nur-savira',
+    href: 'https://www.linkedin.com/in/kartika-nur-savira-951b84383/',
     icon: Linkedin,
     display: 'Connect professionally',
     placeholder: false,

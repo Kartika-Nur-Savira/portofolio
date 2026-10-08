@@ -27,7 +27,7 @@ export default function Footer() {
               <Github size={16} />
             </a>
             <a
-              href="https://linkedin.com/in/kartika-nur-savira"
+              href="https://www.linkedin.com/in/kartika-nur-savira-951b84383/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
