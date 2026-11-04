@@ -7,6 +7,7 @@ export interface Achievement {
   award: string;
   description: string;
   tags: string[];
+  images?: string[];
 }
 
 export interface Certification {
@@ -29,6 +30,7 @@ export const achievements: Achievement[] = [
     description:
       'Analyzed data to derive insights and forecasting results, presenting findings through a data-driven infographic.',
     tags: ['Forecasting', 'Infographic Design', 'Data Insights'],
+    images: ['/images/satu.png', '/images/dua.png'],
   },
   {
     id: 'business-elevation',
@@ -40,18 +42,15 @@ export const achievements: Achievement[] = [
     description:
       'Turned environmental data analysis into SIMORA, an Edutech concept integrating AI and Digital Twin for interactive learning..',
     tags: ['Karhutla Dataset Analysis', 'Creative Infographics', 'Business Analytics'],
+    images: [
+      '/images/simora.png',
+      '/images/latar.png',
+      '/images/sim.png',
+      '/images/dimas.png',
+    ],
   },
 ];
 
-export const certifications: Certification[] = [
-  {
-    id: 'cert-asah-dicoding',
-    name: 'Cohort Asah 2026 — Data Scientist',
-    issuer: 'Dicoding Indonesia',
-    year: '2026 – 2027',
-    credentialId: 'Cohort Asah',
-  },
-];
 
 export const coursework = [
   'Statistics & Probability',

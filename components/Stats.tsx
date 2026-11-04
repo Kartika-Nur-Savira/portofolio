@@ -1,70 +1,69 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useCountUp } from '@/hooks/useCountUp';
-
-interface StatItem {
-  value: string;
-  numericValue?: number;
-  suffix?: string;
-  label: string;
-  sublabel?: string;
-}
-
-const stats: StatItem[] = [
-  { value: 'Data Science', label: 'Area of Study', sublabel: 'Undergraduate' },
-  { value: '10+', numericValue: 10, suffix: '+', label: 'Projects & Coursework', sublabel: 'Academic & Personal' },
-  { value: 'Python', label: 'Primary Tool', sublabel: 'Also R & SQL' },
-  { value: 'UNESA', label: 'Universitas Negeri Surabaya', sublabel: 'Surabaya, Indonesia' },
+const marqueeItems = [
+  'NATURAL LANGUAGE PROCESSING',
+  'PREDICTIVE ANALYTICS',
+  'BUSINESS INTELLIGENCE',
+  'PYTHON',
+  'SQL',
+  'TENSORFLOW',
+  'POSTGRESQL',
+  'MACHINE LEARNING',
+  'TIME SERIES FORECASTING',
+  'COMPUTER VISION',
+  'DATA STORYTELLING',
+  'DATA MINING',
+  'FASTAPI',
+  'BIG DATA ANALYTICS',
 ];
 
-function useInView() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  return { ref, inView };
-}
-
-function AnimatedStat({ stat, inView, index }: { stat: StatItem; inView: boolean; index: number }) {
-  const count = useCountUp(stat.numericValue ?? 0, inView);
-
-  return (
-    <div
-      className={`group rounded-2xl glass dark:bg-[#071638]/85 dark:border-blue-500/20 px-6 py-8 transition-all duration-500 hover:border-[#38BDF8]/40 hover:bg-white/[0.08] dark:hover:bg-blue-600/10 hover:scale-[1.03] hover:shadow-xl hover:shadow-[#38BDF8]/10 ${
-        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}
-      style={{ transitionDelay: `${index * 80}ms` }}
-    >
-      <p className="text-cyan-400 text-xs font-semibold tracking-wider uppercase mb-3">
-        {stat.sublabel}
-      </p>
-      <p className="text-white font-bold text-xl md:text-2xl leading-tight mb-1">
-        {stat.numericValue !== undefined ? `${count}${stat.suffix || ''}` : stat.value}
-      </p>
-      <p className="text-white/60 group-hover:text-white/90 transition-colors text-sm">{stat.label}</p>
-    </div>
-  );
-}
-
 export default function Stats() {
-  const { ref, inView } = useInView();
+  // Duplicate array 2 times for seamless infinite loop (0% to -50%)
+  const items = [...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="bg-[#0B2559] dark:bg-[#030718] py-20 transition-colors duration-500 border-y border-blue-900/30 dark:border-blue-500/20">
-      <div className="max-w-6xl mx-auto px-6">
+    <section
+      aria-label="Skills & Expertise Ticker"
+      className="relative w-full py-4 sm:py-5 bg-[#F6F8FD] dark:bg-[#020718] border-y border-blue-900/10 dark:border-blue-500/20 overflow-hidden select-none transition-colors duration-500"
+      style={{
+        maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)',
+      }}
+    >
+      {/* Subtle Dot Grid Background matching screenshot */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.35] dark:opacity-[0.15]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #6366f1 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Marquee Track Container */}
+      <div className="relative w-full overflow-hidden flex group">
         <div
-          ref={ref}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="flex shrink-0 items-center will-change-transform group-hover:[animation-play-state:paused]"
+          style={{
+            animation: 'toolkit-forward 34s linear infinite',
+            width: 'max-content',
+          }}
         >
-          {stats.map((stat, i) => (
-            <AnimatedStat key={stat.label} stat={stat} inView={inView} index={i} />
+          {items.map((item, index) => (
+            <div
+              key={`${item}-${index}`}
+              className="inline-flex items-center shrink-0"
+            >
+              <span className="text-[11px] sm:text-[13px] md:text-sm font-extrabold uppercase tracking-[0.24em] text-[#2D2A57] dark:text-blue-100/90 hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors cursor-default whitespace-nowrap">
+                {item}
+              </span>
+              <span
+                className="text-purple-600/70 dark:text-cyan-400/70 text-xs sm:text-sm font-black mx-4 sm:mx-6 select-none"
+                aria-hidden="true"
+              >
+                •
+              </span>
+            </div>
           ))}
         </div>
       </div>

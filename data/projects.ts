@@ -107,7 +107,7 @@ export const projects: Project[] = [
       'Dashboard analisis data interaktif berbasis Python & Streamlit untuk eksplorasi penjualan multi-wilayah, profit margin, volume transaksi, dan segmentasi pelanggan ritel Indonesia.',
     tools: ['Python', 'Streamlit', 'Pandas', 'Plotly', 'Excel ETL'],
     highlight: { value: 'Streamlit App', label: 'Retail BI Dashboard' },
-    imageSrc: '/images/IndoRetail.png',
+    imageSrc: '/images/indoretail.png',
     demoUrl: 'https://indoretail.streamlit.app/',
     githubUrl: 'https://github.com/Kartika-Nur-Savira/indoretail',
     featured: true,

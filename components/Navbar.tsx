@@ -11,7 +11,7 @@ const navLinks = [
   { label: 'SKILLS', href: '#skills' },
   { label: 'PROJECTS', href: '#projects' },
   { label: 'EXPERIENCE', href: '#experience' },
-  { label: 'EDUCATION', href: '#education' },
+  { label: 'ACHIEVEMENTS', href: '#education' },
   { label: 'CONTACT', href: '#contact' },
 ];
 
@@ -143,7 +143,7 @@ export default function Navbar() {
                   : 'border border-slate-300 bg-[#0B2559] hover:bg-[#1E3A8A] text-white shadow-sm'
               }`}
             >
-              Hire Me
+              Contact Me
             </button>
           </div>
 

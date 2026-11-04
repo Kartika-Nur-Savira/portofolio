@@ -670,4 +670,17 @@
   animation: swayPendulum 4s ease-in-out infinite;
 }
 
+/* ─── Circular Custom Cursor: Hide default OS pointer on desktop/mouse devices ─── */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  select,
+  summary,
+  .cursor-pointer {
+    cursor: none !important;
+  }
+}
+
 
