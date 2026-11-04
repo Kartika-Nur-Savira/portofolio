@@ -8,7 +8,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#07162B] border-t border-white/5 py-8">
+    <footer className="bg-[#071744] dark:bg-[#020512] border-t border-blue-900/30 dark:border-blue-500/20 py-8 transition-colors duration-500">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div>

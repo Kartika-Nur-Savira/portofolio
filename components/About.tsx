@@ -113,7 +113,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative bg-gradient-to-b from-[#F0F7FB] via-[#F8FBFE] to-[#F0F7FB] py-24 md:py-32 overflow-hidden text-[#0B1F3A]"
+      className="relative bg-gradient-to-b from-[#F0F6FF] via-[#E4EFFF] to-[#F0F6FF] dark:from-[#030718] dark:via-[#051133] dark:to-[#030718] py-24 md:py-32 overflow-hidden text-[#0B2559] dark:text-white transition-colors duration-500"
       ref={ref as React.RefObject<HTMLElement>}
     >
       {/* ─── Clean Ambient Background (Zero Clutter on Text) ─── */}
@@ -136,7 +136,7 @@ export default function About() {
               {/* 2. Floating Interactive Badges Around Photo Card */}
               {/* Badge Top-Left: Data Analytics */}
               <div className="absolute -top-3 -left-4 sm:-left-6 z-30 animate-float-slow">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-[#071638]/95 backdrop-blur-md border border-slate-100 dark:border-blue-400/30 shadow-[0_8px_20px_rgba(11,31,58,0.12)] dark:shadow-[0_8px_25px_rgba(2,7,24,0.7)] text-xs font-bold text-[#0B2559] dark:text-white hover:scale-105 transition-transform cursor-default">
                   <span className="w-2 h-2 rounded-full bg-[#168AC2] animate-ping inline-block" />
                   <BarChart3 size={13} className="text-[#168AC2]" />
                   <span>Data Analytics</span>
@@ -145,14 +145,14 @@ export default function About() {
 
               {/* Badge Bottom-Right: SQL & Python */}
               <div className="absolute -bottom-3 -right-3 sm:-right-5 z-30 animate-float-medium">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-100 shadow-[0_8px_20px_rgba(11,31,58,0.12)] text-xs font-bold text-[#0B1F3A] hover:scale-105 transition-transform cursor-default">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/95 dark:bg-[#071638]/95 backdrop-blur-md border border-slate-100 dark:border-blue-400/30 shadow-[0_8px_20px_rgba(11,31,58,0.12)] dark:shadow-[0_8px_25px_rgba(2,7,24,0.7)] text-xs font-bold text-[#0B2559] dark:text-white hover:scale-105 transition-transform cursor-default">
                   <Database size={13} className="text-[#0284C7]" />
                   <span>SQL &amp; Python</span>
                 </div>
               </div>
 
               {/* 3. Framed Photo Card with Crisp White Border and Soft Blue Shadow */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(11,31,58,0.18)] border-4 border-white bg-slate-100 transition-transform duration-300">
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(11,31,58,0.18)] dark:shadow-[0_25px_60px_rgba(2,7,24,0.9)] border-4 border-white dark:border-blue-500/30 bg-slate-100 dark:bg-[#071638] transition-all duration-300">
                 
                 {/* Subtle gradient vignette at bottom so badges stand out with clarity */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none z-10" />
@@ -168,12 +168,12 @@ export default function About() {
                 />
 
                 {/* Bottom Left Badge: Data Science */}
-                <div className="absolute bottom-4 left-4 rounded-full bg-white/95 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#0B1F3A] shadow-md z-20">
+                <div className="absolute bottom-4 left-4 rounded-full bg-white/95 dark:bg-[#071638]/95 border border-transparent dark:border-blue-400/30 backdrop-blur-md px-3.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#0B2559] dark:text-white shadow-md z-20">
                   Data Science
                 </div>
 
                 {/* Bottom Right Badge: UNESA */}
-                <div className="absolute bottom-4 right-4 rounded-full bg-[#0B1F3A]/90 border border-white/20 backdrop-blur-md px-3 py-1 text-[9px] font-extrabold uppercase tracking-widest text-[#E0F2FE] shadow-md z-20">
+                <div className="absolute bottom-4 right-4 rounded-full bg-[#0B2559]/90 dark:bg-[#071638]/90 border border-white/20 dark:border-blue-400/30 backdrop-blur-md px-3 py-1 text-[9px] font-extrabold uppercase tracking-widest text-[#E0F2FE] shadow-md z-20">
                   UNESA
                 </div>
               </div>
@@ -190,41 +190,41 @@ export default function About() {
             }`}
           >
             {/* 1. Status Pill Badge: "Available for Internships & Projects" */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0B1F3A] text-[#E0F2FE] text-xs font-bold shadow-md mb-6 hover:bg-[#168AC2] transition-colors">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0B2559] dark:bg-[#071638] text-[#E0F2FE] dark:text-sky-300 text-xs font-bold border border-transparent dark:border-blue-400/30 shadow-md mb-6 hover:bg-[#168AC2] transition-colors">
               <Sparkles size={13} className="text-[#38BDF8]" />
               <span>Available for Internships &amp; Projects</span>
             </div>
 
             {/* 2. Main Title: Editorial Serif / Italic (Blue / Navy Brand Palette) */}
-            <h2 className="text-5xl sm:text-6xl md:text-[64px] font-black tracking-tight leading-[1.06] text-[#0B1F3A] font-serif italic mb-6">
-              Hi, I&apos;m <span className="text-[#0B1F3A]">Kartika</span> <br />
-              <span className="bg-gradient-to-r from-[#0B1F3A] via-[#1E3A8A] to-[#2563EB] bg-clip-text text-transparent">
+            <h2 className="text-5xl sm:text-6xl md:text-[64px] font-black tracking-tight leading-[1.06] text-[#0B2559] dark:text-white font-serif italic mb-6 transition-colors duration-500">
+              Hi, I&apos;m <span className="text-[#0B2559] dark:text-white">Kartika</span> <br />
+              <span className="bg-gradient-to-r from-[#0B2559] via-[#1E3A8A] to-[#2563EB] dark:from-white dark:via-blue-200 dark:to-cyan-300 bg-clip-text text-transparent">
                 Nur Savira
               </span>
             </h2>
 
             {/* 3. Role Badges: Navy rounded pills */}
             <div className="flex flex-wrap gap-2.5 mb-7">
-              <span className="px-4 py-1.5 rounded-full bg-[#0B1F3A] text-white text-xs font-semibold shadow-sm hover:bg-[#168AC2] transition-colors">
+              <span className="px-4 py-1.5 rounded-full bg-[#0B2559] dark:bg-[#071638] text-white text-xs font-semibold border border-transparent dark:border-blue-500/30 shadow-sm hover:bg-[#168AC2] transition-colors">
                 Data Science Undergraduate
               </span>
-              <span className="px-4 py-1.5 rounded-full bg-[#0B1F3A] text-white text-xs font-semibold shadow-sm hover:bg-[#168AC2] transition-colors">
+              <span className="px-4 py-1.5 rounded-full bg-[#0B2559] dark:bg-[#071638] text-white text-xs font-semibold border border-transparent dark:border-blue-500/30 shadow-sm hover:bg-[#168AC2] transition-colors">
                 AI &amp; ML Enthusiast
               </span>
-              <span className="px-4 py-1.5 rounded-full bg-[#0B1F3A] text-white text-xs font-semibold shadow-sm hover:bg-[#168AC2] transition-colors">
+              <span className="px-4 py-1.5 rounded-full bg-[#0B2559] dark:bg-[#071638] text-white text-xs font-semibold border border-transparent dark:border-blue-500/30 shadow-sm hover:bg-[#168AC2] transition-colors">
                 Data Analyst
               </span>
             </div>
 
             {/* 4. Expanded Self-Description (Completely Clear, High-Contrast & Readable) */}
-            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed max-w-xl mb-8 font-normal">
+            <div className="space-y-4 text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl mb-8 font-normal transition-colors duration-500">
               <p>
                 Data Science undergraduate at Universitas Negeri Surabaya. Aspiring Data Analyst &amp; Machine Learning practitioner passionate about uncovering actionable insights through exploratory data analysis, predictive modeling, and thoughtful data storytelling.
               </p>
               <p>
                 Experienced in building end-to-end analytics pipelines — from structured querying in SQL, cleaning and statistical modeling in Python, to developing interactive dashboards that translate complex datasets into clear, intuitive decisions.
               </p>
-              <p className="text-[#168AC2] text-xs sm:text-sm font-semibold">
+              <p className="text-[#168AC2] dark:text-cyan-400 text-xs sm:text-sm font-semibold">
                 Always curious about exploring new algorithms, cloud architectures, and leveraging intelligent data solutions to solve impactful real-world challenges.
               </p>
             </div>
@@ -234,18 +234,18 @@ export default function About() {
               {/* Button 1: "View Work →" */}
               <button
                 onClick={scrollToProjects}
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#0B1F3A] via-[#102A4C] to-[#1E3A8A] hover:from-[#102A4C] hover:to-[#2563EB] text-white font-semibold text-sm shadow-[0_8px_20px_rgba(11,31,58,0.25)] hover:shadow-[0_12px_24px_rgba(11,31,58,0.35)] active:scale-[0.98] transition-all"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 hover:from-blue-600 hover:to-cyan-400 text-white font-semibold text-sm shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_12px_24px_rgba(37,99,235,0.4)] active:scale-[0.98] transition-all"
               >
                 View Work <ArrowRight size={16} />
               </button>
 
               {/* Button 2: "Download CV ⤓" */}
               <a
-                href="/cv-kartika-nur-savira.pdf"
+                href="/CV_Kartika_Nur_Savira.pdf"
                 download="CV_Kartika_Nur_Savira.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 border-2 border-[#0B1F3A] text-[#0B1F3A] hover:text-[#168AC2] hover:border-[#168AC2] font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white dark:bg-[#071638] hover:bg-slate-50 dark:hover:bg-blue-600/20 border-2 border-blue-600 dark:border-blue-400/40 text-blue-900 dark:text-cyan-200 font-semibold text-sm shadow-sm hover:shadow active:scale-[0.98] transition-all"
               >
                 Download CV <Download size={15} />
               </a>

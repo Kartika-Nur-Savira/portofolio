@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const font = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -28,8 +29,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={font.variable}>
-      <body className={`${font.className} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning className={font.variable}>
+      <body className={`${font.className} antialiased transition-colors duration-300`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

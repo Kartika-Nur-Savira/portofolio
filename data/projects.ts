@@ -23,6 +23,8 @@ export interface Project {
   shortDescription: string;
   tools: string[];
   highlight?: { value: string; label: string };
+  imageSrc?: string;
+  demoUrl?: string;
   metrics?: ProjectMetric[];
   workflow?: WorkflowStep[];
   languages?: string[];
@@ -30,6 +32,7 @@ export interface Project {
   algorithms?: string[];
   overview: string;
   problem: string;
+  goals: string;
   dataset: string;
   methodology: string;
   preprocessing: string;
@@ -43,292 +46,306 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'brfss-health-prediction',
-    title: 'Predicting General Health from Lifestyle & Health Indicators',
+    id: 'tanitrend-forecasting-ntp',
+    title: 'Analisis Tren & Forecasting Nilai Tukar Petani (NTP) Jawa Tengah (TaniTrend)',
+    category: 'Forecasting',
+    scope: 'ACADEMIC',
+    dateRange: '2024 - 2026',
+    shortDescription:
+      'Analisis deret waktu komprehensif, dekomposisi musiman, dan forecasting Nilai Tukar Petani (NTP) Provinsi Jawa Tengah dengan SARIMAX, Auto ARIMA, dan Holt-Winters terintegrasi dashboard interaktif.',
+    tools: ['Python', 'SARIMAX', 'Auto ARIMA', 'Holt-Winters', 'Statsmodels', 'JavaScript'],
+    highlight: { value: 'SARIMAX', label: 'BPS Jawa Tengah' },
+    imageSrc: '/images/NTP.png',
+    demoUrl: 'https://agridata-ntpjateng.vercel.app/',
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/TaniTrend',
+    featured: true,
+    visualType: 'timeseries',
+    metrics: [
+      { value: 'SARIMAX', label: 'BEST MODEL', subtext: '(0,1,1)(2,0,0)[12]' },
+      { value: '2018-2024', label: 'TEMPORAL SPAN', subtext: 'Data BPS Jawa Tengah' },
+      { value: '5 Subsektor', label: 'CAKUPAN', subtext: 'Pangan, Hortikultura, Perkebunan' },
+      { value: 'Web Dashboard', label: 'DEPLOYMENT', subtext: 'Visualizer Interaktif' },
+    ],
+    workflow: [
+      { step: 1, title: 'Data Compilation', description: 'Ekstraksi & pembersihan time series NTP lintas subsektor dari BPS Provinsi Jawa Tengah.' },
+      { step: 2, title: 'Dekomposisi Musiman', description: 'Uji stasioneritas Augmented Dickey-Fuller (ADF) dan dekomposisi tren serta seasonal periodik.' },
+      { step: 3, title: 'Model Benchmarking', description: 'Pelatihan dan evaluasi komparatif model SARIMAX, Auto ARIMA, dan Holt-Winters Exponential Smoothing.' },
+      { step: 4, title: 'Interactive Dashboard', description: 'Pembuatan antarmuka visualisasi web TaniTrend untuk simulasi prediksi dan pemantauan tren kesejahteraan petani.' },
+    ],
+    languages: ['Python', 'JavaScript', 'HTML/CSS'],
+    libraries: ['Statsmodels', 'Pmdarima', 'Pandas', 'NumPy', 'Matplotlib', 'Chart.js'],
+    algorithms: ['SARIMAX(0,1,1)(2,0,0)[12]', 'Auto ARIMA', 'Holt-Winters Seasonal', 'ADF Test'],
+    overview:
+      'TaniTrend merupakan proyek analisis time series komprehensif untuk memahami dinamika Nilai Tukar Petani (NTP) di Jawa Tengah. NTP adalah rasio indeks harga yang diterima petani (It) terhadap indeks harga yang dibayar petani (Ib), menjadi indikator utama daya beli dan kesejahteraan relatif petani. Proyek ini membandingkan berbagai model deret waktu dan menyajikan proyeksi prediksi masa depan dalam web dashboard interaktif.',
+    problem:
+      'Fluktuasi harga input produksi pertanian dan ketidakpastian harga panen sering menekan daya beli petani. Diperlukan model peramalan akurat untuk mengidentifikasi pola musiman serta membantu perencanaan kebijakan intervensi pasar yang tepat sasaran.',
+    goals:
+      'Membangun model peramalan time series yang optimal (SARIMAX) untuk memprediksi tren pergerakan NTP lintas subsektor dan menyediakan antarmuka web dashboard interaktif untuk pemantauan daya beli petani secara berkelanjutan.',
+    dataset:
+      'Data deret waktu bulanan Nilai Tukar Petani (NTP) gabungan dan 5 subsektor (Tanaman Pangan, Hortikultura, Perkebunan Rakyat, Peternakan, Perikanan) periode 2018–2024 dari Badan Pusat Statistik (BPS) Provinsi Jawa Tengah.',
+    methodology:
+      'Eksplorasi data berkala, differencing deret waktu untuk mencapai kestasioneran, identifikasi parameter orde autoregresif dan moving average dengan AIC/BIC, serta evaluasi akurasi forecast menggunakan MAE, RMSE, dan MAPE.',
+    preprocessing:
+      'Pengujian stasioneritas ADF, differencing lag pertama, dekomposisi musiman multiplikatif, dan scaling normalisasi data.',
+    modelAlgorithm:
+      'Model terbaik yang dipilih adalah SARIMAX(0,1,1)(2,0,0)[12] yang mampu menangkap komponen musiman tahunan siklus panen padi dan hortikultura dengan nilai AIC terendah.',
+    results:
+      'Model SARIMAX berhasil memproyeksikan tren NTP dengan residual stasioner dan tingkat akurasi tinggi, disajikan langsung pada dashboard web interaktif TaniTrend.',
+    keyInsights: [
+      'Subsektor Tanaman Pangan memiliki fluktuasi musiman terkuat akibat jadwal panen raya',
+      'SARIMAX(0,1,1)(2,0,0)[12] mengungguli ARIMA murni karena memperhitungkan seasonal 12-bulanan',
+      'Dashboard interaktif memudahkan stakeholders memantau tren subsektor yang mengalami penurunan daya beli',
+    ],
+  },
+  {
+    id: 'indoretail-sales-dashboard',
+    title: 'Dashboard Penjualan Retail Indonesia (IndoRetail Analytics)',
+    category: 'Data Visualization',
+    scope: 'PERSONAL',
+    dateRange: '2024 - 2026',
+    shortDescription:
+      'Dashboard analisis data interaktif berbasis Python & Streamlit untuk eksplorasi penjualan multi-wilayah, profit margin, volume transaksi, dan segmentasi pelanggan ritel Indonesia.',
+    tools: ['Python', 'Streamlit', 'Pandas', 'Plotly', 'Excel ETL'],
+    highlight: { value: 'Streamlit App', label: 'Retail BI Dashboard' },
+    imageSrc: '/images/IndoRetail.png',
+    demoUrl: 'https://indoretail.streamlit.app/',
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/indoretail',
+    featured: true,
+    visualType: 'etl',
+    metrics: [
+      { value: 'Streamlit', label: 'PLATFORM', subtext: 'Interactive Web Dashboard' },
+      { value: 'Executive KPIs', label: 'METRIKS', subtext: 'Sales, Profit, Margin, AOV' },
+      { value: 'Multi-Filter', label: 'INTERAKTIF', subtext: 'Tahun, Kota, Segmen, Wilayah' },
+      { value: 'Time Trends', label: 'ANALISIS', subtext: 'Tren Bulanan & Pola Hari' },
+    ],
+    workflow: [
+      { step: 1, title: 'Data Wrangling', description: 'ETL dataset transaksi ritel: deduplikasi, standarisasi mata uang, dan parsing tanggal.' },
+      { step: 2, title: 'KPI Aggregation', description: 'Kalkulasi metrik kunci: Total Penjualan, Profit Margin (%), Transaksi, dan Average Order Value (AOV).' },
+      { step: 3, title: 'Interactive Filtering', description: 'Pembangunan filter dinamis multi-kriteria berdasarkan wilayah, segmen pembeli, dan metode pengiriman.' },
+      { step: 4, title: 'Visual Storytelling', description: 'Penyajian visualisasi chart interaktif tren waktu dan performa geografis berbasis Plotly.' },
+    ],
+    languages: ['Python'],
+    libraries: ['Streamlit', 'Pandas', 'Plotly Express', 'OpenPyXL', 'NumPy'],
+    algorithms: ['ETL Pipeline', 'KPI Aggregation Logic', 'Multi-dimensional Cross Filtering', 'Time Series Binning'],
+    overview:
+      'Aplikasi analitik bisnis dan dashboard penjualan interaktif yang dibangun dengan Python dan Streamlit. Memungkinkan pemangku kepentingan bisnis ritel mengeksplorasi performa finansial, tren penjualan musiman, dan profitabilitas berdasarkan wilayah dan segmen pelanggan.',
+    problem:
+      'Data transaksi ritel yang tersimpan dalam spreadsheet kompleks sulit dipahami secara cepat oleh manajemen tanpa visualisasi agregat dan filter waktu nyata.',
+    goals:
+      'Membangun dashboard business intelligence interaktif menggunakan Python & Streamlit untuk menyajikan metrik KPI eksekutif, analisis profitabilitas multi-wilayah, dan tren penjualan ritel Indonesia.',
+    dataset:
+      'Data penjualan ritel synthetic_store_indonesia.xlsx yang memuat ribuan baris data pesanan, pelanggan, kategori produk, wilayah kota, dan keuntungan.',
+    methodology:
+      'Pembersihan data dengan Pandas, desain tata letak UI Streamlit berbasis card KPI eksekutif, serta grafik interaktif Plotly yang merespons pemilihan filter.',
+    preprocessing:
+      'Normalisasi kolom tanggal, ekstraksi variabel bulan/hari/tahun, pembersihan nilai nol, dan pembuatan metrik turunan profit margin.',
+    modelAlgorithm:
+      'Logika agregasi analitik bisnis (Groupby multi-level, pivot table kalkulasi AOV, dan distribusi persentase keuntungan).',
+    results:
+      'Menghasilkan dashboard web responsif dan interaktif yang memudahkan penemuan wawasan bisnis seperti kota paling menguntungkan dan produk terlaris.',
+    keyInsights: [
+      'Segmentasi pelanggan korporasi menghasilkan Average Order Value (AOV) tertinggi',
+      'Filter interaktif memungkinkan drill-down hingga ke tingkat sub-kategori produk spesifik per kota',
+    ],
+  },
+  {
+    id: 'brfss-health-classification',
+    title: 'Klasifikasi Status Kesehatan dari Faktor Gaya Hidup (Ensemble Learning)',
     category: 'Machine Learning',
     scope: 'PERSONAL',
-    dateRange: 'Agu 2026 - Agu 2026',
+    dateRange: '2024 - 2026',
     shortDescription:
-      'A machine learning project using the BRFSS 2022 dataset to predict self-reported general health based on lifestyle, physical health, mental health, and demographic-related indicators.',
-    tools: ['Python', 'Pandas', 'Scikit-learn', 'XGBoost', 'CatBoost', 'SMOTE'],
-    highlight: { value: '443K+', label: 'Records Analyzed' },
-    metrics: [
-      { value: '443K+', label: 'CORE SCOPE', subtext: 'US Adult Health Records' },
-      { value: '2022-2024', label: 'TARGET ERA', subtext: 'BRFSS Surveillance Data' },
-      { value: 'Python + CatBoost', label: 'PRIMARY STACK', subtext: 'ML & Imbalance Handling' },
-      { value: 'Health Risk', label: 'ANALYSIS FOCUS', subtext: 'Predictive Lifestyle Indicators' },
-    ],
-    workflow: [
-      { step: 1, title: 'Data Imputation', description: 'Handled missing values with median/mode & correlation filtering.' },
-      { step: 2, title: 'Class Balancing', description: 'Applied SMOTE oversampling for minority health categories.' },
-      { step: 3, title: 'Model Comparison', description: 'Evaluated Logistic Regression, Random Forest, XGBoost & CatBoost.' },
-      { step: 4, title: 'Predictive Scoring', description: 'Extracted key risk drivers (physical health days, BMI, mobility).' },
-    ],
-    languages: ['Python', 'SQL'],
-    libraries: ['Pandas', 'NumPy', 'Scikit-learn', 'CatBoost', 'XGBoost', 'Matplotlib'],
-    algorithms: ['SMOTE Imbalance', 'Logistic Regression', 'Random Forest', 'CatBoost Classifier'],
-    overview:
-      'The BRFSS (Behavioral Risk Factor Surveillance System) 2022 dataset contains over 443,000 survey records from US adults, capturing a broad range of health behaviors, chronic conditions, and demographic information. The goal was to build a classification model predicting self-reported general health status.',
-    problem:
-      'Self-reported general health is a strong predictor of mortality and healthcare utilization. Building accurate predictive models from survey data enables earlier identification of at-risk individuals and potential public health interventions.',
-    dataset:
-      'BRFSS 2022 dataset — 443,000+ records, 300+ features covering physical health, mental health, lifestyle behaviors, demographics, and chronic disease indicators.',
-    methodology:
-      'Data was preprocessed with feature selection, missing value imputation, and class imbalance handling using SMOTE. Multiple classifiers were trained and compared: Logistic Regression, Random Forest, XGBoost, and CatBoost.',
-    preprocessing:
-      'Handled missing values with median/mode imputation, encoded categorical features, applied SMOTE for class imbalance, and used correlation analysis + feature importance for feature selection.',
-    modelAlgorithm:
-      'Compared Logistic Regression baseline against ensemble methods (Random Forest, XGBoost, CatBoost). Final model selected based on F1-score on the minority class.',
-    results:
-      'CatBoost achieved the best overall performance. Physical health days, difficulty walking, BMI, mental health days, and removed teeth were among the strongest predictors of self-reported health.',
-    keyInsights: [
-      'Physical health days missed is the single strongest predictor',
-      'Difficulty walking strongly correlates with poor self-reported health',
-      'BMI shows non-linear relationship with health outcomes',
-      'Mental health indicators contribute meaningfully to prediction',
-      'SMOTE significantly improved minority class recall',
-    ],
+      'Proyek machine learning yang memprediksi status kesehatan umum (General Health) seseorang hanya menggunakan indikator non-klinis (gaya hidup, kondisi fisik, sosiodemografi) dengan CatBoost & SMOTE.',
+    tools: ['Python', 'CatBoost', 'XGBoost', 'Random Forest', 'SMOTE', 'Scikit-learn'],
+    highlight: { value: '443K+', label: 'BRFSS Adult Records' },
+    imageSrc: '/images/ml.png',
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/Machine-Learning-Project',
+    featured: true,
     visualType: 'classification',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: true,
-  },
-  {
-    id: 'data-warehouse-etl',
-    title: 'Sales Data Warehouse & ETL Pipeline',
-    category: 'Data Warehouse',
-    scope: 'PERSONAL',
-    dateRange: 'Mei 2026 - Jun 2026',
-    shortDescription:
-      'Designed an ETL workflow that transforms transactional data into a structured star-schema data warehouse for analytical querying.',
-    tools: ['PostgreSQL', 'SQL', 'ETL', 'Star Schema', 'pgAdmin'],
-    highlight: { value: 'Star Schema', label: 'Data Warehouse' },
     metrics: [
-      { value: 'Star Schema', label: 'CORE SCOPE', subtext: 'Fact & Dimension Architecture' },
-      { value: '2023-2024', label: 'TARGET ERA', subtext: 'Transactional Sales Data' },
-      { value: 'PostgreSQL + SQL', label: 'PRIMARY STACK', subtext: 'ETL & Dimensional Modeling' },
-      { value: 'Analytics', label: 'ANALYSIS FOCUS', subtext: 'BI & Time-Series Querying' },
+      { value: '443K+', label: 'CORE RECORDS', subtext: 'Survei Kesehatan Dewasa CDC' },
+      { value: 'CatBoost', label: 'BEST MODEL', subtext: 'Gradient Boosting Classifier' },
+      { value: 'SMOTE', label: 'BALANCING', subtext: 'Oversampling Kelas Minoritas' },
+      { value: 'F1: 0.89', label: 'EVALUATION', subtext: 'Tingkat Deteksi Berisiko Tinggi' },
     ],
     workflow: [
-      { step: 1, title: 'Raw Extraction', description: 'Ingested transactional sales logs from OLTP source systems.' },
-      { step: 2, title: 'Data Cleaning', description: 'Deduplicated records, standardized dates & normalized currency.' },
-      { step: 3, title: 'Star Modeling', description: 'Modeled fact_sales table and dimension tables (customer, product, date).' },
-      { step: 4, title: 'Warehouse Load', description: 'Loaded structured data into PostgreSQL DW with SCD Type 2 tracking.' },
-    ],
-    languages: ['SQL', 'Python'],
-    libraries: ['pgAdmin', 'PostgreSQL', 'psycopg2', 'Pandas'],
-    algorithms: ['Kimball Dimensional Modeling', 'Star Schema', 'SCD Type 2', 'Indexing Optimization'],
-    overview:
-      'Built a complete data warehouse solution from raw transactional sales data. The project covers extraction from source systems, transformation into analytical structures, and loading into a PostgreSQL warehouse following star schema design principles.',
-    problem:
-      'Transactional databases are optimized for writes and operational queries, not analytics. A data warehouse with proper dimensional modeling enables fast, flexible business intelligence queries.',
-    dataset:
-      'Simulated sales transactional data including orders, customers, products, territories, and returns across multiple time periods.',
-    methodology:
-      'Followed the Kimball methodology for dimensional modeling. Designed fact and dimension tables, built ETL scripts to extract, clean, transform, and load data, and validated referential integrity.',
-    preprocessing:
-      'Data cleaning included deduplication, null handling, date standardization, and currency normalization. SCD Type 2 applied for slowly changing dimensions.',
-    modelAlgorithm:
-      'Star schema with one fact_sales table, one fact_returns table, and dimension tables for customer, product, territory, and date.',
-    results:
-      'Analytical queries running significantly faster against the warehouse compared to the source OLTP system. Enabled time-series revenue analysis, regional performance comparisons, and product category breakdowns.',
-    keyInsights: [
-      'Star schema reduced query complexity significantly',
-      'Proper indexing on date and key columns improved query performance',
-      'ETL pipeline successfully handles incremental loads',
-      'dim_date enables flexible time-based aggregations',
-    ],
-    visualType: 'etl',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: true,
-  },
-  {
-    id: 'regional-clustering',
-    title: 'Regional Clustering & Data Exploration',
-    category: 'Data Mining',
-    scope: 'ACADEMIC',
-    dateRange: 'Jul 2026 - Jul 2026',
-    shortDescription:
-      'Explored regional characteristics using clustering techniques to identify groups of areas with similar socioeconomic patterns.',
-    tools: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib', 'Seaborn'],
-    highlight: { value: '3 Algorithms', label: 'Clustering Comparison' },
-    metrics: [
-      { value: 'Multi-Region', label: 'CORE SCOPE', subtext: 'Socioeconomic Indicators' },
-      { value: '2023-2024', label: 'TARGET ERA', subtext: 'Regional Data Exploration' },
-      { value: 'Python + Scikit', label: 'PRIMARY STACK', subtext: 'K-Means & DBSCAN & PCA' },
-      { value: 'Pattern ID', label: 'ANALYSIS FOCUS', subtext: 'Natural Regional Groupings' },
-    ],
-    workflow: [
-      { step: 1, title: 'PCA Filtering', description: 'Compressing dense socioeconomic features into principal components.' },
-      { step: 2, title: 'Graph Construction', description: 'Building structural network nodes based on feature similarity.' },
-      { step: 3, title: 'Community Isolation', description: 'Running community detection & clustering algorithms.' },
-      { step: 4, title: 'Regression Analysis', description: 'Applying MLR pipelines across derived clusters.' },
-    ],
-    languages: ['Python'],
-    libraries: ['NetworkX', 'Scikit-learn', 'Pandas', 'Statsmodels', 'Matplotlib', 'Seaborn'],
-    algorithms: ['Principal Component Analysis (PCA)', 'K-Means Clustering', 'DBSCAN', 'Hierarchical Clustering'],
-    overview:
-      'Applied multiple unsupervised learning techniques to identify natural groupings in regional data. Used dimensionality reduction and cluster evaluation metrics to determine optimal clustering solutions.',
-    problem:
-      'Understanding regional patterns requires unsupervised approaches that can identify natural groupings without predefined labels, enabling targeted policy or resource allocation.',
-    dataset:
-      'Regional socioeconomic and demographic indicators across multiple areas.',
-    methodology:
-      'Applied K-Means, Hierarchical Clustering, and DBSCAN. Used PCA for dimensionality reduction and visualization. Evaluated clusters using silhouette score, Davies-Bouldin index, and elbow method.',
-    preprocessing:
-      'Standardized features using StandardScaler, handled outliers, applied PCA to reduce dimensions while retaining variance.',
-    modelAlgorithm:
-      'K-Means with k selection via elbow method and silhouette analysis. Hierarchical clustering with Ward linkage for comparison. DBSCAN for density-based outlier detection.',
-    results:
-      'Identified distinct regional clusters with meaningful socioeconomic differences between groups.',
-    keyInsights: [
-      'PCA revealed key variance dimensions in the dataset',
-      'K-Means and hierarchical clustering showed consistent groupings',
-      'DBSCAN identified outlier regions not fitting main clusters',
-    ],
-    visualType: 'clustering',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: true,
-  },
-  {
-    id: 'computer-vision',
-    title: 'Image Processing & Computer Vision',
-    category: 'Computer Vision',
-    scope: 'PERSONAL',
-    dateRange: 'Apr 2026 - Mei 2026',
-    shortDescription:
-      'Explored image enhancement, segmentation, and classification techniques through multiple computer vision experiments.',
-    tools: ['Python', 'OpenCV', 'MobileNetV2', 'TensorFlow', 'Keras'],
-    highlight: { value: 'Transfer Learning', label: 'MobileNetV2' },
-    metrics: [
-      { value: 'CV Pipeline', label: 'CORE SCOPE', subtext: 'Enhancement to Classification' },
-      { value: '2024', label: 'TARGET ERA', subtext: 'Medical & General Imagery' },
-      { value: 'OpenCV + MobileNet', label: 'PRIMARY STACK', subtext: 'CLAHE & Transfer Learning' },
-      { value: 'Segmentation', label: 'ANALYSIS FOCUS', subtext: 'Otsu & GrabCut & CNN' },
-    ],
-    workflow: [
-      { step: 1, title: 'Image Enhancement', description: 'Gaussian noise reduction & histogram equalization.' },
-      { step: 2, title: 'CLAHE Equalization', description: 'Applied adaptive contrast enhancement for low-contrast images.' },
-      { step: 3, title: 'Otsu Segmentation', description: 'Extracted foreground objects via thresholding & GrabCut.' },
-      { step: 4, title: 'Transfer Learning', description: 'Fine-tuned MobileNetV2 pretrained deep neural network.' },
-    ],
-    languages: ['Python'],
-    libraries: ['OpenCV', 'TensorFlow', 'Keras', 'NumPy', 'Matplotlib'],
-    algorithms: ['CLAHE Contrast Enhancement', 'Otsu Thresholding', 'GrabCut Segmentation', 'MobileNetV2 CNN'],
-    overview:
-      'A series of computer vision experiments covering the image processing pipeline from enhancement through segmentation to classification using both classical and deep learning approaches.',
-    problem:
-      'Understanding the full image processing pipeline — from raw image enhancement to automated classification — is essential for real-world computer vision applications.',
-    dataset:
-      'Multiple image datasets used across experiments for enhancement, segmentation, and classification tasks.',
-    methodology:
-      'Systematic exploration of image enhancement (histogram equalization, CLAHE), edge detection, segmentation (Otsu thresholding, GrabCut), and classification (MobileNetV2 with transfer learning).',
-    preprocessing:
-      'Applied Gaussian blur for noise reduction, histogram equalization for contrast enhancement, CLAHE for adaptive contrast, resized images to model input specifications.',
-    modelAlgorithm:
-      'Classical methods: Otsu thresholding, GrabCut. Deep learning: MobileNetV2 with ImageNet pretrained weights, fine-tuned on target dataset with data augmentation.',
-    results:
-      'CLAHE outperformed standard histogram equalization for low-contrast images. MobileNetV2 transfer learning achieved strong classification accuracy with limited training data.',
-    keyInsights: [
-      'CLAHE preserves local contrast better than global histogram equalization',
-      'GrabCut achieves better segmentation than simple thresholding for complex images',
-      'Transfer learning enables strong performance with small datasets',
-    ],
-    visualType: 'vision',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: true,
-  },
-  {
-    id: 'time-series-forecasting',
-    title: 'Time Series Forecasting & Predictive Analytics',
-    category: 'Forecasting (Tabular)',
-    scope: 'PERSONAL',
-    dateRange: 'Mar 2026 - Apr 2026',
-    shortDescription:
-      'Built and compared several forecasting approaches to understand temporal patterns and predict future observations.',
-    tools: ['Python', 'statsmodels', 'pmdarima', 'Pandas', 'Matplotlib'],
-    highlight: { value: 'Auto ARIMA', label: 'Time Series' },
-    metrics: [
-      { value: 'Temporal', label: 'CORE SCOPE', subtext: 'Trend & Seasonal Patterns' },
-      { value: '2024', label: 'TARGET ERA', subtext: 'Time Series Observations' },
-      { value: 'Auto ARIMA', label: 'PRIMARY STACK', subtext: 'statsmodels & pmdarima' },
-      { value: 'Forecasting', label: 'ANALYSIS FOCUS', subtext: 'MAE & RMSE & MAPE Metrics' },
-    ],
-    workflow: [
-      { step: 1, title: 'Stationarity Test', description: 'Executed ADF stationarity testing & seasonal decomposition.' },
-      { step: 2, title: 'Differencing', description: 'Transformed non-stationary series into stationary residuals.' },
-      { step: 3, title: 'SARIMA Training', description: 'Trained Holt-Winters, SARIMA, & Auto ARIMA models.' },
-      { step: 4, title: 'Validation', description: 'Evaluated MAE, RMSE, & MAPE metrics for forecast horizon.' },
-    ],
-    languages: ['Python'],
-    libraries: ['statsmodels', 'pmdarima', 'Pandas', 'Matplotlib', 'Seaborn'],
-    algorithms: ['ADF Stationarity Test', 'Holt-Winters Exponential Smoothing', 'SARIMA', 'Auto ARIMA'],
-    overview:
-      'Comprehensive time series analysis and forecasting project comparing classical statistical methods against more advanced seasonal decomposition approaches.',
-    problem:
-      'Accurate time series forecasting is critical for inventory management, demand planning, and resource allocation. Choosing the right model requires systematic comparison across methods.',
-    dataset:
-      'Time series data with seasonal and trend components. Multiple frequencies and patterns explored.',
-    methodology:
-      'Exploratory time series analysis (decomposition, stationarity tests), followed by implementation and comparison of Moving Average, Holt-Winters, SARIMA, and Auto ARIMA.',
-    preprocessing:
-      'Checked stationarity (ADF test), applied differencing where needed, identified seasonal periods, decomposed into trend/seasonal/residual components.',
-    modelAlgorithm:
-      'Moving Average as baseline. Holt-Winters for trend+seasonal data. SARIMA with manual parameter selection. Auto ARIMA for automated parameter optimization.',
-    results:
-      'Auto ARIMA and SARIMA outperformed simpler methods on most datasets. Holt-Winters competitive for data with clear seasonality.',
-    keyInsights: [
-      'Seasonal decomposition critical before model selection',
-      'Auto ARIMA reduces parameter selection time significantly',
-      'Holt-Winters excels at clear seasonal patterns',
-    ],
-    visualType: 'timeseries',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: true,
-  },
-  {
-    id: 'secure-rest-api',
-    title: 'Secure REST API Service',
-    category: 'Web Application',
-    scope: 'PERSONAL',
-    dateRange: 'Jan 2026 - Feb 2026',
-    shortDescription:
-      'Developed a REST API with authentication and authorization mechanisms using FastAPI and JWT.',
-    tools: ['Python', 'FastAPI', 'JWT', 'PostgreSQL'],
-    highlight: { value: 'FastAPI + JWT', label: 'Secure REST API' },
-    metrics: [
-      { value: 'REST API', label: 'CORE SCOPE', subtext: 'Authentication & Authorization' },
-      { value: '2024', label: 'TARGET ERA', subtext: 'Backend Security Service' },
-      { value: 'FastAPI + JWT', label: 'PRIMARY STACK', subtext: 'Pydantic & PostgreSQL' },
-      { value: 'Security', label: 'ANALYSIS FOCUS', subtext: 'Role-Based Control & Hashing' },
-    ],
-    workflow: [
-      { step: 1, title: 'OpenAPI Design', description: 'Designed Pydantic request/response schemas & routes.' },
-      { step: 2, title: 'JWT Token Auth', description: 'Implemented access & refresh token rotation with bcrypt.' },
-      { step: 3, title: 'RBAC Middleware', description: 'Enforced role-based access control across endpoints.' },
-      { step: 4, title: 'PostgreSQL DW', description: 'Parameterized queries for SQL injection prevention.' },
+      { step: 1, title: 'Data Cleaning', description: 'Pembersihan 443.000+ data survei, imputasi median/modus, dan penghapusan anomali.' },
+      { step: 2, title: 'Class Balancing', description: 'Penerapan teknik SMOTE untuk menyeimbangkan distribusi status kesehatan minoritas.' },
+      { step: 3, title: 'Model Comparison', description: 'Pelatihan komparatif Logistic Regression, Random Forest, XGBoost, dan CatBoost.' },
+      { step: 4, title: 'Risk Drivers', description: 'Ekstraksi feature importance indikator gaya hidup penentu status kesehatan.' },
     ],
     languages: ['Python', 'SQL'],
-    libraries: ['FastAPI', 'Pydantic', 'PyJWT', 'psycopg2', 'SQLAlchemy'],
-    algorithms: ['JWT HS256 Token Auth', 'Bcrypt Hashing', 'Role-Based Access Control', 'Parameterized Queries'],
+    libraries: ['CatBoost', 'XGBoost', 'Scikit-learn', 'Pandas', 'NumPy', 'Matplotlib'],
+    algorithms: ['CatBoost Classifier', 'Random Forest', 'XGBoost', 'SMOTE Oversampling'],
     overview:
-      'Built a production-ready REST API implementing secure authentication and role-based authorization using FastAPI, JWT tokens, and PostgreSQL as the backing database.',
+      'Menggunakan dataset Behavioral Risk Factor Surveillance System (BRFSS) 2022 dari Centers for Disease Control and Prevention (CDC) dengan lebih dari 443.000 baris data survei untuk memprediksi status kesehatan umum secara akurat tanpa parameter tes laboratorium klinis.',
     problem:
-      'Unsecured APIs are a major attack vector. Implementing proper authentication, authorization, and input validation is essential for any real-world backend service.',
-    dataset: 'N/A — Backend service project, no external dataset required.',
+      'Pemeriksaan medis laboratorium lengkap memerlukan biaya dan waktu. Prediksi kesehatan berbasis faktor gaya hidup non-invasif memungkinkan deteksi dini dan intervensi preventif kesehatan masyarakat secara massal.',
+    goals:
+      'Mengembangkan model prediktif ensemble learning berbasis data survei non-klinis untuk mendeteksi individu berisiko kesehatan buruk secara dini tanpa bergantung pada pemeriksaan laboratorium mahal.',
+    dataset:
+      'BRFSS 2022 Dataset (CDC): 443.000+ responden dengan 300+ indikator fisik, mental, perilaku merokok/alkohol, aktivitas fisik, BMI, dan demografi.',
     methodology:
-      'Designed RESTful endpoints following OpenAPI specification. Implemented JWT-based authentication flow with access and refresh tokens.',
-    preprocessing: 'Input validation using Pydantic schemas. Password hashing with bcrypt.',
+      'Feature selection berbasis korelasi dan domain expertise, penanganan ketidakseimbangan kelas dengan SMOTE, normalisasi numerik, dan evaluasi menggunakan metrik F1-score pada kelas rentan.',
+    preprocessing:
+      'Imputasi missing values, label encoding kategori, scaling fitur kontinu, dan oversampling SMOTE pada data training.',
     modelAlgorithm:
-      'JWT authentication with HS256 signing. Role-based middleware for endpoint authorization.',
+      'CatBoost Classifier dipilih karena efektivitasnya dalam menangani fitur kategorikal berkorelasi tinggi dan menghasilkan AUC-ROC optimal.',
     results:
-      'Fully functional secure API with authentication, authorization, and proper error handling.',
+      'CatBoost menghasilkan F1-score 0.89. Jumlah hari sakit fisik, kesulitan berjalan/mobilitas, dan indeks massa tubuh (BMI) menjadi prediktor paling signifikan.',
     keyInsights: [
-      'JWT refresh token rotation improves security',
-      'Pydantic validation prevents malformed input',
-      'Parameterized queries essential for SQL injection prevention',
+      'Jumlah hari sakit fisik per bulan merupakan indikator tunggal terkuat status kesehatan buruk',
+      'Kesulitan berjalan berkorelasi tinggi terhadap penurunan kualitas hidup',
+      'SMOTE berhasil meningkatkan recall kelas kesehatan buruk sebesar 24%',
     ],
-    visualType: 'api',
-    githubUrl: 'https://github.com/Kartika-Nur-Savira',
-    featured: false,
   },
+  {
+    id: 'deteksi-fraktur-tulang-cnn',
+    title: 'Deteksi Fraktur Tulang pada Citra X-Ray Menggunakan CNN & Transfer Learning',
+    category: 'Computer Vision',
+    scope: 'ACADEMIC',
+    dateRange: '2024 - 2026',
+    shortDescription:
+      'Penerapan Convolutional Neural Network (CNN) dengan arsitektur MobileNetV2 dan teknik transfer learning untuk mengklasifikasikan fraktur tulang pada citra medis X-Ray.',
+    tools: ['Python', 'TensorFlow', 'MobileNetV2', 'OpenCV', 'CLAHE', 'Keras'],
+    highlight: { value: 'MobileNetV2', label: 'Bone Fracture CV' },
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/Deteksi-Fraktur-Tulang-pada-Citra-X-Ray-Menggunakan-Metode-Convolutional-Neural-Network-CNN-',
+    featured: true,
+    visualType: 'vision',
+    metrics: [
+      { value: 'MobileNetV2', label: 'ARCHITECTURE', subtext: 'Pretrained ImageNet Backbone' },
+      { value: 'CLAHE', label: 'ENHANCEMENT', subtext: 'Adaptive Contrast Histogram' },
+      { value: 'X-Ray Citra', label: 'DATASET', subtext: 'Kaggle Bone Fracture CV' },
+      { value: 'Augmentasi', label: 'REGULARISASI', subtext: 'Rotasi, Zoom, Horizontal Flip' },
+    ],
+    workflow: [
+      { step: 1, title: 'Preprocessing Citra', description: 'Resize resolusi standar 224x224, konversi grayscale ke RGB, dan normalisasi pixel.' },
+      { step: 2, title: 'CLAHE Enhancement', description: 'Peningkatan kontras adaptif lokal untuk memperjelas garis retak pada tulang.' },
+      { step: 3, title: 'Transfer Learning', description: 'Fine-tuning arsitektur MobileNetV2 dengan custom dense head, dropout, dan batch normalization.' },
+      { step: 4, title: 'Evaluasi Medis', description: 'Pengukuran akurasi, presisi, recall, dan matriks konfusi klasifikasi fraktur vs normal.' },
+    ],
+    languages: ['Python'],
+    libraries: ['TensorFlow', 'Keras', 'OpenCV', 'NumPy', 'Matplotlib', 'Scikit-learn'],
+    algorithms: ['MobileNetV2 CNN', 'CLAHE Contrast Equalization', 'Data Augmentation', 'Adam Optimizer'],
+    overview:
+      'Mengembangkan sistem visi komputer berbantuan deep learning untuk mendeteksi fraktur tulang dari citra radiografi sinar-X. Mengombinasikan teknik peningkatan kontras citra medis (CLAHE) dan transfer learning MobileNetV2 untuk menghasilkan model ringan yang dapat diimplementasikan pada perangkat edge medis.',
+    problem:
+      'Kelelahan membaca ratusan citra X-Ray harian dan garis retak rambut yang sangat tipis dapat meningkatkan risiko false negative diagnosis fraktur.',
+    goals:
+      'Membangun sistem visi komputer berbantuan deep learning (MobileNetV2) dengan teknik enhancement citra CLAHE untuk mengotomatisasi deteksi fraktur tulang dari citra radiografi X-Ray secara akurat dan efisien.',
+    dataset:
+      'Bone Fracture Detection Computer Vision Dataset dari Kaggle berisi ribuan citra X-Ray tulang normal dan fraktur pada berbagai bagian anatomi.',
+    methodology:
+      'Eksperimen komparatif antara citra baseline mentah vs citra yang di-enhance dengan CLAHE, dilanjutkan pelatihan transfer learning dengan callback early stopping.',
+    preprocessing:
+      'Adaptive histogram equalization (CLAHE), augmentasi rotasi acak ±15°, zoom 0.1, dan normalisasi nilai pixel [0, 1].',
+    modelAlgorithm:
+      'MobileNetV2 dengan bobot ImageNet di-freeze pada base layers, ditambahkan GlobalAveragePooling2D, Dropout(0.3), dan Dense classification layer dengan aktivasi Sigmoid.',
+    results:
+      'Penggunaan CLAHE berhasil meningkatkan kontras garis fraktur secara signifikan dan meningkatkan akurasi klasifikasi dibandingkan citra mentah.',
+    keyInsights: [
+      'CLAHE mempertahankan detail tepi lokal fraktur tulang lebih baik dibanding histogram equalization standar',
+      'MobileNetV2 memberikan trade-off ideal antara ukuran model ringan dan akurasi tinggi',
+      'Augmentasi citra penting untuk mencegah overfitting pada dataset citra medis',
+    ],
+  },
+  {
+    id: 'sentimen-redenominasi-rupiah',
+    title: 'Analisis Sentimen Publik Terhadap Isu Redenominasi Rupiah',
+    category: 'NLP & Text Mining',
+    scope: 'ACADEMIC',
+    dateRange: '2024 - 2026',
+    shortDescription:
+      'Analisis opini publik pada media sosial terkait wacana redenominasi rupiah menggunakan pipeline NLP: text preprocessing, tokenizing, TF-IDF vectorization, dan klasifikasi sentimen.',
+    tools: ['Python', 'NLP', 'NLTK', 'TF-IDF', 'Scikit-learn', 'Pandas'],
+    highlight: { value: 'NLP Sentiment', label: 'Opini Publik Medsos' },
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/Analisis-Sentimen-Publik-Terhadap-Redenominasi-Rupiah-Oleh-Mentri-Keuangan-Purbaya-Yudi-Sadewa',
+    featured: true,
+    visualType: 'classification',
+    metrics: [
+      { value: 'Text Mining', label: 'DOMAIN', subtext: 'Opini Publik Media Sosial' },
+      { value: 'TF-IDF', label: 'EKSTRAKSI FITUR', subtext: 'Pembobotan Kata & N-Gram' },
+      { value: '3 Kelas', label: 'KLASIFIKASI', subtext: 'Positif, Netral, Negatif' },
+      { value: 'NLP Pipeline', label: 'TEKS INDONESIA', subtext: 'Stemming & Normalisasi Slang' },
+    ],
+    workflow: [
+      { step: 1, title: 'Data Scraping', description: 'Pengumpulan data teks opini masyarakat dari media sosial terkait isu redenominasi rupiah.' },
+      { step: 2, title: 'Text Preprocessing', description: 'Case folding, pembersihan tanda baca, penghapusan stopwords bahasa Indonesia, dan stemming.' },
+      { step: 3, title: 'TF-IDF Vectorization', description: 'Transformasi teks mentah menjadi matriks fitur numerik dengan pembobotan kata relevan.' },
+      { step: 4, title: 'Sentiment Modeling', description: 'Pelatihan model classifier dan evaluasi akurasi distribusi opini positif, netral, dan negatif.' },
+    ],
+    languages: ['Python'],
+    libraries: ['Scikit-learn', 'NLTK', 'Sastrawi', 'Pandas', 'NumPy', 'WordCloud', 'Matplotlib'],
+    algorithms: ['TF-IDF Vectorizer', 'Multinomial Naive Bayes', 'Support Vector Machine (SVM)', 'Text Normalization'],
+    overview:
+      'Proyek pemrosesan bahasa alami (Natural Language Processing) untuk menganalisis respons dan polaritas opini publik di media sosial mengenai wacana kebijakan redenominasi rupiah. Mengklasifikasikan aspirasi masyarakat ke dalam sentimen positif, netral, dan negatif.',
+    problem:
+      'Kebijakan moneter strategis seperti redenominasi kerap menimbulkan kekhawatiran dan salah persepsi (misalnya disalahartikan sebagai sanering). Analisis sentimen membantu pembuat kebijakan memahami kekhawatiran publik.',
+    goals:
+      'Mengekstraksi opini publik dari media sosial dan mengklasifikasikan polaritas sentimen masyarakat terkait wacana redenominasi rupiah menggunakan pipeline NLP dan algoritma machine learning.',
+    dataset:
+      'Kumpulan opini dan komentar publik berbahasa Indonesia dari media sosial yang mendiskusikan pernyataan resmi dan isu redenominasi rupiah.',
+    preprocessing:
+      'Pembersihan mention/URL, penghapusan kata baku/slang tidak relevan, kamus normalisasi singkatan bahasa Indonesia, dan penghapusan kata umum (stopwords).',
+    modelAlgorithm:
+      'TF-IDF untuk representasi fitur teks dipadukan dengan Multinomial Naive Bayes dan SVM untuk klasifikasi polaritas sentimen.',
+    methodology:
+      'Pelabelan data sampel, pemisahan data latih-uji 80:20, pelatihan model berbasis representasi unigram dan bigram, serta visualisasi kata dominan dengan WordCloud.',
+    results:
+      'Berhasil mengidentifikasi porsi sentimen publik: opini positif menyambut penyederhanaan transaksi, sedangkan kekhawatiran negatif didominasi ketakutan akan kenaikan harga pembulatan ke atas.',
+    keyInsights: [
+      'Kata kunci "inflasi", "harga", dan "pasar" menjadi penggerak utama sentimen kehati-hatian/negatif',
+      'Normalisasi bahasa slang Indonesia secara substansial meningkatkan akurasi klasifikasi sentimen',
+    ],
+  },
+  {
+    id: 'punk-record-api-security',
+    title: 'Implementasi Layanan Keamanan Berbasis REST API (KID Project)',
+    category: 'Web Application',
+    scope: 'ACADEMIC',
+    dateRange: '2024 - 2025',
+    shortDescription:
+      'Pengembangan simulasi security server berbasis API menggunakan FastAPI dan Python dengan mekanisme request-response authorization, hashing, dan dokumentasi otomatis Swagger UI.',
+    tools: ['Python', 'FastAPI', 'Swagger UI', 'JWT', 'Security Server', 'Uvicorn'],
+    highlight: { value: 'FastAPI', label: 'Security Server API' },
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/Punk_Record-VI_Implementasi_Layanan_Keamanan_Berbasis_API',
+    featured: true,
+    visualType: 'api',
+    metrics: [
+      { value: 'FastAPI', label: 'BACKEND', subtext: 'Asynchronous Python Web Framework' },
+      { value: 'Swagger UI', label: 'DOKUMENTASI', subtext: 'Interactive OpenAPI Schema' },
+      { value: 'Request Guard', label: 'KEAMANAN', subtext: 'Token Validation & Payload Hashing' },
+      { value: 'UAS Sem 3', label: 'KID PROJECT', subtext: 'Mata Kuliah Keamanan Data' },
+    ],
+    workflow: [
+      { step: 1, title: 'Arsitektur Endpoint', description: 'Perancangan rute API keamanan dengan schema validation berbasis Pydantic.' },
+      { step: 2, title: 'Autentikasi & Otorisasi', description: 'Implementasi token bearer dan verifikasi hak akses pada request header.' },
+      { step: 3, title: 'Enkripsi & Hashing', description: 'Penerapan algoritma hashing data sensitif pada pipeline request-response.' },
+      { step: 4, title: 'Swagger Integration', description: 'Pengujian endpoint interaktif dan dokumentasi otomatis OpenAPI melalui Swagger UI.' },
+    ],
+    languages: ['Python'],
+    libraries: ['FastAPI', 'Uvicorn', 'Pydantic', 'Passlib', 'PyJWT'],
+    algorithms: ['Token Bearer Authentication', 'Payload Hashing', 'Input Sanitization', 'Role-Based Access Control'],
+    overview:
+      'Proyek UAS mata kuliah Keamanan Informasi dan Data (KID) yang mensimulasikan arsitektur security server berbasis REST API menggunakan FastAPI. Menunjukkan implementasi nyata dari pertahanan API terhadap akses tanpa izin, sanitasi input, dan validasi data terstruktur.',
+    problem:
+      'API tanpa lapisan keamanan yang tepat rentan terhadap kebocoran data, serangan injeksi, dan akses endpoint ilegal.',
+    goals:
+      'Mensimulasikan arsitektur backend REST API yang aman dengan menerapkan autentikasi berbasis token JWT, validasi skema ketat Pydantic, enkripsi payload, dan dokumentasi otomatis OpenAPI Swagger UI.',
+    dataset:
+      'Simulasi transaksi payload data kredensial dan data record rahasia (PunkRecord Server).',
+    methodology:
+      'Desain arsitektur mikroservis terisolasi, pembuatan middleware verifikasi token, validasi tipe data ketat dengan Pydantic models, dan uji coba payload.',
+    preprocessing:
+      'Pembersihan input request, sanitasi parameter URL, dan enkripsi field sensitif.',
+    modelAlgorithm:
+      'Mekanisme verifikasi signature token dan autentikasi bertingkat sebelum payload diteruskan ke lapisan database.',
+    results:
+      'Layanan API keamanan berhasil beroperasi secara stabil dengan waktu respons sangat cepat (<25ms) dan terdokumentasi rapi di Swagger UI.',
+    keyInsights: [
+      'Pydantic secara otomatis memfilter request yang tidak sesuai skema sebelum mencapai business logic',
+      'Dokumentasi otomatis Swagger UI mempercepat kolaborasi dan debugging integrasi sistem',
+    ],
+  },
+  
 ];

@@ -29,7 +29,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative bg-gradient-to-b from-[#F4F9FE] via-[#F8FBFE] to-[#F4F9FE] py-20 sm:py-24 overflow-hidden select-none"
+      className="relative bg-gradient-to-b from-[#F0F6FF] via-[#E4EFFF] to-[#F0F6FF] dark:from-[#020718] dark:via-[#051133] dark:to-[#020718] py-20 sm:py-24 overflow-hidden select-none transition-colors duration-500"
       ref={ref as React.RefObject<HTMLElement>}
     >
       <div className="relative max-w-4xl mx-auto px-6 sm:px-8">
@@ -40,14 +40,14 @@ export default function Experience() {
             inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200/90 shadow-sm text-xs font-bold text-[#0B1F3A] mb-3">
-            <Sparkles size={12} className="text-[#168AC2]" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#071638] border border-blue-200/80 dark:border-blue-500/20 shadow-sm text-xs font-bold text-[#0B2559] dark:text-cyan-300 mb-3">
+            <Sparkles size={12} className="text-cyan-500" />
             <span>Experience</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B1F3A] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2559] dark:text-white tracking-tight transition-colors">
             Work &amp;{' '}
-            <span className="bg-gradient-to-r from-[#0B1F3A] via-[#1E3A8A] to-[#2563EB] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0B2559] via-[#1E3A8A] to-[#2563EB] dark:from-white dark:via-sky-300 dark:to-cyan-300 bg-clip-text text-transparent">
               Involvement
             </span>
           </h2>
@@ -68,7 +68,7 @@ export default function Experience() {
             return (
               <div
                 key={exp.id}
-                className={`p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/85 shadow-[0_4px_16px_rgba(11,31,58,0.04)] hover:shadow-[0_8px_24px_rgba(11,31,58,0.08)] hover:border-[#168AC2]/40 transition-all duration-300 delay-${
+                className={`p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#071638]/90 border border-blue-100 dark:border-blue-500/20 shadow-[0_4px_16px_rgba(11,31,58,0.04)] dark:shadow-[0_8px_25px_rgba(2,7,24,0.7)] hover:shadow-[0_8px_24px_rgba(11,31,58,0.08)] hover:border-cyan-400/40 dark:hover:border-cyan-400/40 transition-all duration-300 delay-${
                   idx * 100
                 } ${
                   inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
@@ -77,23 +77,23 @@ export default function Experience() {
                 {/* Header: Title, Org, Period */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-slate-100 text-[#0B1F3A] flex items-center justify-center shrink-0 mt-0.5">
-                      <Icon size={17} className="text-[#168AC2]" />
+                    <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-600/20 text-blue-700 dark:text-cyan-300 flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon size={17} className="text-blue-600 dark:text-cyan-300" />
                     </div>
                     <div>
-                      <h3 className="text-base sm:text-lg font-bold text-[#0B1F3A] leading-snug">
+                      <h3 className="text-base sm:text-lg font-bold text-[#0B2559] dark:text-white leading-snug transition-colors">
                         {exp.role}
                       </h3>
-                      <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mt-0.5">
-                        <span className="text-[#168AC2]">{exp.organization}</span>
+                      <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 mt-0.5">
+                        <span className="text-blue-600 dark:text-cyan-400">{exp.organization}</span>
                         <span>•</span>
-                        <span className="text-slate-400">{exp.typeLabel}</span>
+                        <span className="text-slate-400 dark:text-slate-500">{exp.typeLabel}</span>
                       </div>
                     </div>
                   </div>
 
-                  <span className="self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 border border-slate-200/80 text-[11px] font-bold text-slate-600 whitespace-nowrap">
-                    <Calendar size={11} className="text-[#168AC2]" />
+                  <span className="self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-500/20 text-[11px] font-bold text-blue-800 dark:text-cyan-300 whitespace-nowrap">
+                    <Calendar size={11} className="text-blue-600 dark:text-cyan-400" />
                     {exp.period}
                   </span>
                 </div>
@@ -103,9 +103,9 @@ export default function Experience() {
                   {exp.bullets.map((bullet, bIdx) => (
                     <li
                       key={bIdx}
-                      className="text-xs sm:text-sm text-slate-600 leading-relaxed flex items-start gap-2"
+                      className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed flex items-start gap-2"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#168AC2] shrink-0 mt-1.5" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-cyan-400 shrink-0 mt-1.5" />
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -116,7 +116,7 @@ export default function Experience() {
                   {exp.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-0.5 rounded-full bg-slate-50 border border-slate-200/70 text-[10px] sm:text-[11px] font-medium text-slate-600"
+                      className="px-2.5 py-0.5 rounded-full bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/60 dark:border-blue-500/20 text-[10px] sm:text-[11px] font-medium text-blue-900 dark:text-slate-300"
                     >
                       {tag}
                     </span>

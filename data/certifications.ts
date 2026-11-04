@@ -32,14 +32,14 @@ export const achievements: Achievement[] = [
   },
   {
     id: 'business-elevation',
-    title: 'Finalist – Business Elevation Competition',
-    event: 'Creative Infographics',
-    organizer: 'HMJ Bisnis, Politeknik Negeri Jember',
+    title: '1st Place – Educational Innovation Infographic, DIMAS-TI AMLI ',
+    event: 'ducational Innovation Infographic',
+    organizer: 'Asosiasi MIPA LPTK Indonesiar',
     year: '2026',
-    award: 'Finalist 🎖️',
+    award: '1st Place 🎖️',
     description:
-      'Analyzed an AI-related dataset to identify key insights and presented findings through a creative infographic.',
-    tags: ['AI Dataset Analysis', 'Creative Infographics', 'Business Analytics'],
+      'Turned environmental data analysis into SIMORA, an Edutech concept integrating AI and Digital Twin for interactive learning..',
+    tags: ['Karhutla Dataset Analysis', 'Creative Infographics', 'Business Analytics'],
   },
 ];
 

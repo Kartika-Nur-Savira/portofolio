@@ -37,18 +37,18 @@ function AnimatedStat({ stat, inView, index }: { stat: StatItem; inView: boolean
 
   return (
     <div
-      className={`group rounded-2xl glass px-6 py-8 transition-all duration-500 hover:border-[#6FC7F1]/40 hover:bg-white/[0.08] hover:scale-[1.03] hover:shadow-lg hover:shadow-[#6FC7F1]/10 ${
+      className={`group rounded-2xl glass dark:bg-[#071638]/85 dark:border-blue-500/20 px-6 py-8 transition-all duration-500 hover:border-[#38BDF8]/40 hover:bg-white/[0.08] dark:hover:bg-blue-600/10 hover:scale-[1.03] hover:shadow-xl hover:shadow-[#38BDF8]/10 ${
         inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       }`}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
-      <p className="text-[#6FC7F1] text-xs font-semibold tracking-wider uppercase mb-3">
+      <p className="text-cyan-400 text-xs font-semibold tracking-wider uppercase mb-3">
         {stat.sublabel}
       </p>
       <p className="text-white font-bold text-xl md:text-2xl leading-tight mb-1">
         {stat.numericValue !== undefined ? `${count}${stat.suffix || ''}` : stat.value}
       </p>
-      <p className="text-white/40 text-sm group-hover:text-white/60 transition-colors">{stat.label}</p>
+      <p className="text-white/60 group-hover:text-white/90 transition-colors text-sm">{stat.label}</p>
     </div>
   );
 }
@@ -57,7 +57,7 @@ export default function Stats() {
   const { ref, inView } = useInView();
 
   return (
-    <section className="bg-[#0B1F3A] py-20">
+    <section className="bg-[#0B2559] dark:bg-[#030718] py-20 transition-colors duration-500 border-y border-blue-900/30 dark:border-blue-500/20">
       <div className="max-w-6xl mx-auto px-6">
         <div
           ref={ref}
