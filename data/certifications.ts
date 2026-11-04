@@ -33,7 +33,7 @@ export const achievements: Achievement[] = [
   {
     id: 'business-elevation',
     title: '1st Place – Educational Innovation Infographic, DIMAS-TI AMLI ',
-    event: 'ducational Innovation Infographic',
+    event: 'Educational Innovation Infographic',
     organizer: 'Asosiasi MIPA LPTK Indonesiar',
     year: '2026',
     award: '1st Place 🎖️',
