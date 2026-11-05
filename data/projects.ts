@@ -149,6 +149,57 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: 'sentimen-redenominasi-rupiah',
+    title: 'Analisis Sentimen Publik Terhadap Isu Redenominasi Rupiah',
+    category: 'NLP & Text Mining',
+    scope: 'ACADEMIC',
+    dateRange: '2024 - 2026',
+    shortDescription:
+      'Analisis opini publik pada media sosial terkait wacana redenominasi rupiah menggunakan pipeline NLP: text preprocessing, tokenizing, TF-IDF vectorization, dan klasifikasi sentimen.',
+    tools: ['Python', 'NLP', 'NLTK', 'TF-IDF', 'Scikit-learn', 'Pandas'],
+    highlight: { value: 'NLP Sentiment', label: 'Opini Publik Medsos' },
+    imageSrc: '/images/sentimen.png',
+    demoUrl: 'https://analisis-sentimen-redenominasi-rupiah.vercel.app/dashboard',
+    githubUrl: 'https://github.com/Kartika-Nur-Savira/Analisis-Sentimen-Publik-Terhadap-Redenominasi-Rupiah-Oleh-Mentri-Keuangan-Purbaya-Yudi-Sadewa',
+    featured: true,
+    visualType: 'classification',
+    metrics: [
+      { value: 'Text Mining', label: 'DOMAIN', subtext: 'Opini Publik Media Sosial' },
+      { value: 'TF-IDF', label: 'EKSTRAKSI FITUR', subtext: 'Pembobotan Kata & N-Gram' },
+      { value: '3 Kelas', label: 'KLASIFIKASI', subtext: 'Positif, Netral, Negatif' },
+      { value: 'NLP Pipeline', label: 'TEKS INDONESIA', subtext: 'Stemming & Normalisasi Slang' },
+    ],
+    workflow: [
+      { step: 1, title: 'Data Scraping', description: 'Pengumpulan data teks opini masyarakat dari media sosial terkait isu redenominasi rupiah.' },
+      { step: 2, title: 'Text Preprocessing', description: 'Case folding, pembersihan tanda baca, penghapusan stopwords bahasa Indonesia, dan stemming.' },
+      { step: 3, title: 'TF-IDF Vectorization', description: 'Transformasi teks mentah menjadi matriks fitur numerik dengan pembobotan kata relevan.' },
+      { step: 4, title: 'Sentiment Modeling', description: 'Pelatihan model classifier dan evaluasi akurasi distribusi opini positif, netral, dan negatif.' },
+    ],
+    languages: ['Python'],
+    libraries: ['Scikit-learn', 'NLTK', 'Sastrawi', 'Pandas', 'NumPy', 'WordCloud', 'Matplotlib'],
+    algorithms: ['TF-IDF Vectorizer', 'Multinomial Naive Bayes', 'Support Vector Machine (SVM)', 'Text Normalization'],
+    overview:
+      'Proyek pemrosesan bahasa alami (Natural Language Processing) untuk menganalisis respons dan polaritas opini publik di media sosial mengenai wacana kebijakan redenominasi rupiah. Mengklasifikasikan aspirasi masyarakat ke dalam sentimen positif, netral, dan negatif.',
+    problem:
+      'Kebijakan moneter strategis seperti redenominasi kerap menimbulkan kekhawatiran dan salah persepsi (misalnya disalahartikan sebagai sanering). Analisis sentimen membantu pembuat kebijakan memahami kekhawatiran publik.',
+    goals:
+      'Mengekstraksi opini publik dari media sosial dan mengklasifikasikan polaritas sentimen masyarakat terkait wacana redenominasi rupiah menggunakan pipeline NLP dan algoritma machine learning.',
+    dataset:
+      'Kumpulan opini dan komentar publik berbahasa Indonesia dari media sosial yang mendiskusikan pernyataan resmi dan isu redenominasi rupiah.',
+    preprocessing:
+      'Pembersihan mention/URL, penghapusan kata baku/slang tidak relevan, kamus normalisasi singkatan bahasa Indonesia, dan penghapusan kata umum (stopwords).',
+    modelAlgorithm:
+      'TF-IDF untuk representasi fitur teks dipadukan dengan Multinomial Naive Bayes dan SVM untuk klasifikasi polaritas sentimen.',
+    methodology:
+      'Pelabelan data sampel, pemisahan data latih-uji 80:20, pelatihan model berbasis representasi unigram dan bigram, serta visualisasi kata dominan dengan WordCloud.',
+    results:
+      'Berhasil mengidentifikasi porsi sentimen publik: opini positif menyambut penyederhanaan transaksi, sedangkan kekhawatiran negatif didominasi ketakutan akan kenaikan harga pembulatan ke atas.',
+    keyInsights: [
+      'Kata kunci "inflasi", "harga", dan "pasar" menjadi penggerak utama sentimen kehati-hatian/negatif',
+      'Normalisasi bahasa slang Indonesia secara substansial meningkatkan akurasi klasifikasi sentimen',
+    ],
+  },
+  {
     id: 'brfss-health-classification',
     title: 'Klasifikasi Status Kesehatan dari Faktor Gaya Hidup (Ensemble Learning)',
     category: 'Machine Learning',
@@ -199,6 +250,7 @@ export const projects: Project[] = [
       'SMOTE berhasil meningkatkan recall kelas kesehatan buruk sebesar 24%',
     ],
   },
+  
   {
     id: 'deteksi-fraktur-tulang-cnn',
     title: 'Deteksi Fraktur Tulang pada Citra X-Ray Menggunakan CNN & Transfer Learning',
@@ -249,55 +301,7 @@ export const projects: Project[] = [
       'Augmentasi citra penting untuk mencegah overfitting pada dataset citra medis',
     ],
   },
-  {
-    id: 'sentimen-redenominasi-rupiah',
-    title: 'Analisis Sentimen Publik Terhadap Isu Redenominasi Rupiah',
-    category: 'NLP & Text Mining',
-    scope: 'ACADEMIC',
-    dateRange: '2024 - 2026',
-    shortDescription:
-      'Analisis opini publik pada media sosial terkait wacana redenominasi rupiah menggunakan pipeline NLP: text preprocessing, tokenizing, TF-IDF vectorization, dan klasifikasi sentimen.',
-    tools: ['Python', 'NLP', 'NLTK', 'TF-IDF', 'Scikit-learn', 'Pandas'],
-    highlight: { value: 'NLP Sentiment', label: 'Opini Publik Medsos' },
-    githubUrl: 'https://github.com/Kartika-Nur-Savira/Analisis-Sentimen-Publik-Terhadap-Redenominasi-Rupiah-Oleh-Mentri-Keuangan-Purbaya-Yudi-Sadewa',
-    featured: true,
-    visualType: 'classification',
-    metrics: [
-      { value: 'Text Mining', label: 'DOMAIN', subtext: 'Opini Publik Media Sosial' },
-      { value: 'TF-IDF', label: 'EKSTRAKSI FITUR', subtext: 'Pembobotan Kata & N-Gram' },
-      { value: '3 Kelas', label: 'KLASIFIKASI', subtext: 'Positif, Netral, Negatif' },
-      { value: 'NLP Pipeline', label: 'TEKS INDONESIA', subtext: 'Stemming & Normalisasi Slang' },
-    ],
-    workflow: [
-      { step: 1, title: 'Data Scraping', description: 'Pengumpulan data teks opini masyarakat dari media sosial terkait isu redenominasi rupiah.' },
-      { step: 2, title: 'Text Preprocessing', description: 'Case folding, pembersihan tanda baca, penghapusan stopwords bahasa Indonesia, dan stemming.' },
-      { step: 3, title: 'TF-IDF Vectorization', description: 'Transformasi teks mentah menjadi matriks fitur numerik dengan pembobotan kata relevan.' },
-      { step: 4, title: 'Sentiment Modeling', description: 'Pelatihan model classifier dan evaluasi akurasi distribusi opini positif, netral, dan negatif.' },
-    ],
-    languages: ['Python'],
-    libraries: ['Scikit-learn', 'NLTK', 'Sastrawi', 'Pandas', 'NumPy', 'WordCloud', 'Matplotlib'],
-    algorithms: ['TF-IDF Vectorizer', 'Multinomial Naive Bayes', 'Support Vector Machine (SVM)', 'Text Normalization'],
-    overview:
-      'Proyek pemrosesan bahasa alami (Natural Language Processing) untuk menganalisis respons dan polaritas opini publik di media sosial mengenai wacana kebijakan redenominasi rupiah. Mengklasifikasikan aspirasi masyarakat ke dalam sentimen positif, netral, dan negatif.',
-    problem:
-      'Kebijakan moneter strategis seperti redenominasi kerap menimbulkan kekhawatiran dan salah persepsi (misalnya disalahartikan sebagai sanering). Analisis sentimen membantu pembuat kebijakan memahami kekhawatiran publik.',
-    goals:
-      'Mengekstraksi opini publik dari media sosial dan mengklasifikasikan polaritas sentimen masyarakat terkait wacana redenominasi rupiah menggunakan pipeline NLP dan algoritma machine learning.',
-    dataset:
-      'Kumpulan opini dan komentar publik berbahasa Indonesia dari media sosial yang mendiskusikan pernyataan resmi dan isu redenominasi rupiah.',
-    preprocessing:
-      'Pembersihan mention/URL, penghapusan kata baku/slang tidak relevan, kamus normalisasi singkatan bahasa Indonesia, dan penghapusan kata umum (stopwords).',
-    modelAlgorithm:
-      'TF-IDF untuk representasi fitur teks dipadukan dengan Multinomial Naive Bayes dan SVM untuk klasifikasi polaritas sentimen.',
-    methodology:
-      'Pelabelan data sampel, pemisahan data latih-uji 80:20, pelatihan model berbasis representasi unigram dan bigram, serta visualisasi kata dominan dengan WordCloud.',
-    results:
-      'Berhasil mengidentifikasi porsi sentimen publik: opini positif menyambut penyederhanaan transaksi, sedangkan kekhawatiran negatif didominasi ketakutan akan kenaikan harga pembulatan ke atas.',
-    keyInsights: [
-      'Kata kunci "inflasi", "harga", dan "pasar" menjadi penggerak utama sentimen kehati-hatian/negatif',
-      'Normalisasi bahasa slang Indonesia secara substansial meningkatkan akurasi klasifikasi sentimen',
-    ],
-  },
+  
   {
     id: 'punk-record-api-security',
     title: 'Implementasi Layanan Keamanan Berbasis REST API (KID Project)',
