@@ -159,7 +159,7 @@ export default function About() {
                 
                 {/* Photo: High-Res Cafe Portrait with Original Background Intact */}
                 <Image
-                  src="/images/profile-cafe.jpg"
+                  src="/images/profile.png"
                   alt="Kartika Nur Savira"
                   fill
                   priority
