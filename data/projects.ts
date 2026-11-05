@@ -200,6 +200,59 @@ export const projects: Project[] = [
     ],
   },
   {
+  id: 'credit-risk-prediction',
+  title: 'Credit Risk Prediction & Analysis Dashboard',
+  category: 'Machine Learning & Financial Analytics',
+  scope: 'ACADEMIC',
+  dateRange: '2026',
+  shortDescription:
+    'Pengembangan model machine learning untuk memprediksi risiko gagal bayar pinjaman (credit default risk) menggunakan algoritma klasifikasi, analisis faktor risiko, dan Explainable AI untuk mendukung pengambilan keputusan kredit.',
+  tools: ['Python', 'Machine Learning', 'XGBoost', 'LightGBM', 'Scikit-learn', 'SHAP', 'Pandas'],
+  highlight: { value: 'XGBoost Model', label: 'Credit Risk Prediction' },
+  imageSrc: '/images/credit.png',
+  demoUrl: 'https://credit-risk-prediction-analyst.vercel.app/',
+  githubUrl: '',
+  featured: true,
+  visualType: 'classification',
+  metrics: [
+    { value: '466,285', label: 'DATASET', subtext: 'Riwayat Pengajuan Pinjaman' },
+    { value: '75 Features', label: 'FITUR', subtext: 'Informasi Finansial & Kredit' },
+    { value: '0.7145', label: 'ROC-AUC', subtext: 'Performa Model XGBoost' },
+    { value: '3 Models', label: 'KLASIFIKASI', subtext: 'Logistic Regression, LightGBM, XGBoost' },
+  ],
+  workflow: [
+    { step: 1, title: 'Data Understanding', description: 'Eksplorasi dataset historis pinjaman untuk memahami karakteristik peminjam, distribusi status pinjaman, dan pola risiko kredit.' },
+    { step: 2, title: 'Data Preprocessing', description: 'Persiapan data melalui penanganan fitur numerik dan kategorikal serta penyiapan variabel target untuk kebutuhan klasifikasi risiko kredit.' },
+    { step: 3, title: 'Model Development', description: 'Pelatihan dan perbandingan algoritma Logistic Regression, LightGBM, dan XGBoost untuk memprediksi probabilitas gagal bayar.' },
+    { step: 4, title: 'Evaluation & Interpretation', description: 'Evaluasi performa model menggunakan ROC-AUC, PR-AUC, Precision, Recall, dan F1-Score serta interpretasi faktor risiko menggunakan SHAP.' },
+  ],
+  languages: ['Python'],
+  libraries: ['Pandas', 'NumPy', 'Scikit-learn', 'XGBoost', 'LightGBM', 'SHAP', 'Matplotlib'],
+  algorithms: ['XGBoost Classifier', 'LightGBM Classifier', 'Logistic Regression', 'SHAP', 'Probability of Default (PD)'],
+  overview:
+    'Proyek machine learning untuk memprediksi risiko gagal bayar pinjaman (credit default risk) berdasarkan karakteristik finansial dan riwayat kredit peminjam. Menggunakan pendekatan CRISP-DM dengan membandingkan beberapa algoritma klasifikasi dan memilih XGBoost sebagai model utama. Hasil prediksi diintegrasikan ke dalam dashboard interaktif untuk analisis risiko, interpretasi faktor yang memengaruhi prediksi, dan simulasi keputusan pemberian kredit.',
+  problem:
+    'Institusi keuangan menghadapi tantangan dalam menilai kelayakan calon peminjam karena setiap keputusan pemberian kredit memiliki risiko finansial. Penilaian yang kurang tepat dapat meningkatkan potensi kredit macet. Oleh karena itu, diperlukan model prediktif yang mampu mengestimasi probabilitas gagal bayar dan membantu proses pengambilan keputusan kredit.',
+  goals:
+    'Mengembangkan model machine learning untuk memprediksi probabilitas gagal bayar pinjaman, mengidentifikasi faktor-faktor yang memengaruhi risiko kredit, membandingkan performa algoritma klasifikasi, serta membangun dashboard interaktif sebagai sistem pendukung keputusan kredit.',
+  dataset:
+    'Dataset historis pengajuan pinjaman dengan 466.285 observasi dan 75 fitur yang mencakup karakteristik pinjaman, informasi finansial peminjam, loan grade, suku bunga, pendapatan tahunan, Debt-to-Income Ratio (DTI), dan status pinjaman.',
+  preprocessing:
+    'Persiapan data meliputi penanganan fitur numerik dan kategorikal, pemeriksaan kualitas data, serta penyiapan variabel target untuk membedakan pinjaman yang mengalami gagal bayar dan pinjaman yang tidak mengalami gagal bayar.',
+  modelAlgorithm:
+    'Menggunakan Logistic Regression sebagai baseline model, LightGBM, dan XGBoost sebagai algoritma pembanding. XGBoost dipilih sebagai model utama dengan ROC-AUC sebesar 0.7145. SHAP digunakan untuk menjelaskan kontribusi setiap fitur terhadap hasil prediksi risiko kredit.',
+  methodology:
+    'Menggunakan pendekatan CRISP-DM yang mencakup Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation, dan Deployment. Data dibagi menggunakan subset terstratifikasi untuk pelatihan dan pengujian model. Evaluasi dilakukan menggunakan ROC-AUC, PR-AUC, Precision, Recall, dan F1-Score, dilanjutkan dengan analisis decision threshold dan interpretasi SHAP.',
+  results:
+    'XGBoost menghasilkan performa terbaik dengan ROC-AUC sebesar 0.7145 dan PR-AUC sebesar 0.4058. Model mampu mengidentifikasi pola risiko kredit berdasarkan karakteristik peminjam dan informasi pinjaman. Hasil prediksi juga digunakan untuk simulasi kebijakan persetujuan kredit melalui pengaturan decision threshold.',
+  keyInsights: [
+    'Loan grade memiliki hubungan kuat dengan tingkat risiko kredit. Grade A memiliki default rate lebih rendah dibandingkan grade G.',
+    'Peminjam dengan Debt-to-Income Ratio (DTI) yang lebih tinggi cenderung memiliki risiko gagal bayar lebih besar.',
+    'Suku bunga, loan grade, tenor pinjaman, dan DTI menjadi beberapa faktor penting dalam analisis risiko kredit berdasarkan interpretasi SHAP.',
+    'Pengaturan decision threshold memungkinkan analisis keseimbangan antara approval rate dan risiko kredit macet.',
+  ],
+},
+  {
     id: 'brfss-health-classification',
     title: 'Klasifikasi Status Kesehatan dari Faktor Gaya Hidup (Ensemble Learning)',
     category: 'Machine Learning',
