@@ -211,7 +211,7 @@ export const projects: Project[] = [
   highlight: { value: 'XGBoost Model', label: 'Credit Risk Prediction' },
   imageSrc: '/images/credit.png',
   demoUrl: 'https://credit-risk-prediction-analyst.vercel.app/',
-  githubUrl: '',
+  githubUrl: 'https://github.com/Kartika-Nur-Savira/credit-risk-prediction',
   featured: true,
   visualType: 'classification',
   metrics: [
